@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Appuntamento;
 import com.example.demo.service.AppuntamentoService;
 import com.example.demo.service.WhatsAppService;
+import com.example.demo.validator.AppuntamentoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ public class AppuntamentoController {
     
     @Autowired
     private WhatsAppService whatsAppService;
+    
+    @Autowired
+    private AppuntamentoValidator appuntamentoValidator;
     
     @GetMapping("/")
     public String home(Model model) {
@@ -35,28 +39,36 @@ public class AppuntamentoController {
     public String prenotaAppuntamento(@Valid @ModelAttribute("appuntamento") Appuntamento appuntamento, 
                                       BindingResult result, 
                                       Model model) {
+        // Validazione base Spring
         if (result.hasErrors()) {
             return "prenota";
         }
         
-        // Validazione orario di lavoro: 8:00 - 20:00
-        int ora = appuntamento.getDataAppuntamento().getHour();
-        if (ora < 8 || ora >= 20) {
-            model.addAttribute("error", "⚠️ ORARIO NON DISPONIBILE - Gli appuntamenti sono possibili solo dalle 8:00 alle 20:00. Per favore, scegli un orario all'interno della nostra fascia lavorativa.");
-            return "prenota";
-        }
-        
         try {
+            // NUOVO: Validazione completa con tutte le regole di business
+            appuntamentoValidator.validaConFestivita(appuntamento);
+            
+            // Crea l'appuntamento se tutte le validazioni passano
             Appuntamento saved = appuntamentoService.creaAppuntamento(appuntamento);
+            
+            // Genera link WhatsApp per contatto rapido
             model.addAttribute("whatsappLink", whatsAppService.generaLinkWhatsApp(saved));
             model.addAttribute("success", true);
             return "conferma-appuntamento";
+            
+        } catch (IllegalArgumentException e) {
+            // Errori di validazione (orari, festivi, campi obbligatori)
+            model.addAttribute("error", e.getMessage());
+            return "prenota";
+            
         } catch (IllegalStateException e) {
+            // Slot non disponibile (qualcun altro ha prenotato prima)
             if ("FASCIA_ORARIA_NON_DISPONIBILE".equals(e.getMessage())) {
-                model.addAttribute("error", "⚠️ FASCIA ORARIA NON DISPONIBILE - La data e l'ora selezionate sono già occupate da un altro appuntamento. Ogni appuntamento dura circa 1 ora. Ti preghiamo di scegliere un'altra data o un altro orario.");
-                return "prenota";
+                model.addAttribute("error", "⚠️ FASCIA ORARIA NON DISPONIBILE - La data e l'ora selezionate sono già occupate. Ti preghiamo di scegliere un'altra data o un altro orario.");
+            } else {
+                model.addAttribute("error", e.getMessage());
             }
-            throw e;
+            return "prenota";
         }
     }
 }

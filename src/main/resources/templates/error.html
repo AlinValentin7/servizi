@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${errorCode} ?: 'Errore' + ' - Servizi Edili Elvis SRL'">Errore - Servizi Edili Elvis SRL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .error-container {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .error-content {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            max-width: 700px;
+            width: 100%;
+            animation: slideUp 0.6s ease-out;
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .error-emoji {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .error-code {
+            font-size: 6rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+        .error-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0e3b2e;
+            margin-bottom: 1rem;
+        }
+        .error-message {
+            font-size: 1.25rem;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+        .error-details {
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+        .error-gif {
+            width: 100%;
+            max-width: 400px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 2rem auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .btn-custom {
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .contact-info {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #FF6B35;
+        }
+        .construction-tape {
+            background: repeating-linear-gradient(
+                45deg,
+                #FFD700,
+                #FFD700 20px,
+                #000 20px,
+                #000 40px
+            );
+            height: 10px;
+            margin: 2rem 0;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span class="logo-icon"><i class="bi bi-buildings"></i></span>
+                Servizi Edili Elvis SRL
+            </div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/lavori">Portfolio</a>
+                <a href="/contatti">Contatti</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="error-container">
+        <div class="error-content">
+            <!-- Emoji animata -->
+            <div class="error-emoji" th:text="${errorEmoji} ?: '🚧'">🚧</div>
+            
+            <!-- Codice errore -->
+            <div class="error-code" th:text="${errorCode} ?: '500'">500</div>
+            
+            <!-- Titolo errore -->
+            <h1 class="error-title" th:text="${errorTitle} ?: 'Errore di Sistema'">Errore di Sistema</h1>
+            
+            <!-- Nastro cantiere -->
+            <div class="construction-tape"></div>
+            
+            <!-- GIF animata tematica -->
+            <img th:if="${errorGif}" 
+                 th:src="${errorGif}" 
+                 alt="Errore animato" 
+                 class="error-gif"
+                 onerror="this.style.display='none'">
+            
+            <!-- Messaggio errore -->
+            <p class="error-message" th:text="${errorMessage} ?: 'Si è verificato un errore'">
+                Si è verificato un errore
+            </p>
+            
+            <!-- Dettagli errore -->
+            <p class="error-details" th:text="${errorDetails} ?: 'Qualcosa è andato storto nel cantiere digitale'">
+                Qualcosa è andato storto nel cantiere digitale
+            </p>
+            
+            <!-- Pulsanti azione -->
+            <div class="mt-4">
+                <a href="/" class="btn btn-primary btn-custom me-2">
+                    <i class="bi bi-house-door me-2"></i>Torna alla Home
+                </a>
+                <a href="javascript:history.back()" class="btn btn-secondary btn-custom">
+                    <i class="bi bi-arrow-left me-2"></i>Torna Indietro
+                </a>
+            </div>
+            
+            <!-- Info contatto -->
+            <div class="contact-info">
+                <p class="mb-2"><strong>Il problema persiste?</strong></p>
+                <p class="mb-0">
+                    <i class="bi bi-telephone-fill text-success me-2"></i>
+                    <a href="tel:+393801590128" class="text-decoration-none">+39 3801590128</a>
+                    <span class="mx-2">|</span>
+                    <i class="bi bi-envelope-fill text-primary me-2"></i>
+                    <a href="mailto:trandafiralinvalentin@gmail.com" class="text-decoration-none">
+                        trandafiralinvalentin@gmail.com
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p style="text-align: center; padding: 1rem; color: #6c757d;">&copy; 2025 Servizi Edili Elvis SRL</p>
+        <span class="firma-discreta">Firmato $₿420</span>
+    </footer>
+</body>
+</html>

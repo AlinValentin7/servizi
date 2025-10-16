@@ -38,6 +38,10 @@ public class LavoroService {
     @Autowired
     private LavoroRepository lavoroRepository;
     
+    // Service per gestione sicura upload file
+    @Autowired
+    private FileStorageService fileStorageService;
+    
     // Directory dove vengono salvate le foto dei lavori
     private final String UPLOAD_DIR = "uploads/lavori/";
     
@@ -215,13 +219,24 @@ public class LavoroService {
      * ATTENZIONE: Operazione IRREVERSIBILE!
      * Il lavoro e tutte le sue informazioni vengono cancellate dal database.
      * 
-     * NOTA: Questo metodo NON elimina le foto dal disco.
-     * Le foto rimangono nella cartella uploads/lavori/ anche dopo l'eliminazione.
-     * Considera di implementare una pulizia periodica delle foto orfane.
+     * NUOVO: Ora elimina anche tutte le foto dal disco per evitare file orfani!
      * 
      * @param id L'ID del lavoro da eliminare
      */
     public void eliminaLavoro(Long id) {
+        // STEP 1: Recupera il lavoro per ottenere gli URL delle foto
+        Optional<Lavoro> lavoroOpt = lavoroRepository.findById(id);
+        
+        if (lavoroOpt.isPresent()) {
+            Lavoro lavoro = lavoroOpt.get();
+            
+            // STEP 2: Elimina tutte le foto dal disco
+            fileStorageService.deleteAllLavoroFiles(lavoro.getFotoPrima(), lavoro.getFotoDopo());
+            System.out.println("🗑️ Eliminate foto del lavoro ID: " + id);
+        }
+        
+        // STEP 3: Elimina il lavoro dal database
         lavoroRepository.deleteById(id);
+        System.out.println("✅ Lavoro ID " + id + " eliminato dal database");
     }
 }

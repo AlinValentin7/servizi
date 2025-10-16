@@ -131,7 +131,14 @@ public class AppuntamentoService {
             System.out.println("Avviso: Impossibile inviare email di conferma. " + e.getMessage());
         }
         
-        // STEP 4: Invia notifica WhatsApp all'admin (opzionale - NON bloccante)
+        // STEP 4: Invia notifica email all'admin (NON bloccante)
+        try {
+            emailService.inviaNotificaAdminNuovoAppuntamento(saved);
+        } catch (Exception e) {
+            System.out.println("Avviso: Impossibile inviare notifica admin. " + e.getMessage());
+        }
+        
+        // STEP 5: Invia notifica WhatsApp all'admin (opzionale - NON bloccante)
         try {
             whatsAppService.inviaNotificaAppuntamento(saved);
         } catch (Exception e) {

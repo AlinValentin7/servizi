@@ -159,6 +159,77 @@ public class EmailService {
     }
     
     /**
+     * Invia notifica email all'admin quando arriva un nuovo appuntamento.
+     * 
+     * Questa email avvisa l'amministratore che c'è una nuova richiesta da gestire.
+     * Include tutti i dettagli per decidere rapidamente se confermare o rifiutare.
+     * 
+     * @param appuntamento Il nuovo appuntamento ricevuto
+     */
+    public void inviaNotificaAdminNuovoAppuntamento(Appuntamento appuntamento) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(fromEmail);
+        message.setTo("trandafiralinvalentin@gmail.com"); // Email admin
+        message.setSubject("🔔 NUOVO APPUNTAMENTO RICEVUTO - Azione Richiesta");
+        
+        String dataOraFormattata = appuntamento.getDataAppuntamento().format(DATE_FORMATTER);
+        
+        message.setText(
+            "🔔 NUOVO APPUNTAMENTO DA GESTIRE\n\n" +
+            "Un cliente ha appena richiesto un appuntamento sul sito.\n" +
+            "Accedi alla dashboard admin per confermare o rifiutare.\n\n" +
+            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+            "📋 DETTAGLI APPUNTAMENTO:\n" +
+            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+            "Cliente: " + appuntamento.getNomeCliente() + " " + appuntamento.getCognomeCliente() + "\n" +
+            "Telefono: " + appuntamento.getTelefono() + "\n" +
+            "Email: " + appuntamento.getEmail() + "\n\n" +
+            "Data/Ora richiesta: " + dataOraFormattata + "\n" +
+            "Servizio: " + appuntamento.getTipoServizio() + "\n" +
+            "Luogo: " + (appuntamento.getIndirizzo() != null ? appuntamento.getIndirizzo() : "Non specificato") + "\n\n" +
+            "Descrizione lavoro:\n" +
+            (appuntamento.getDescrizione() != null ? appuntamento.getDescrizione() : "Nessuna descrizione fornita") + "\n\n" +
+            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+            "⚡ AZIONI RAPIDE:\n" +
+            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+            "👉 Accedi alla dashboard: http://localhost:8080/admin/dashboard\n" +
+            "👉 Gestisci appuntamenti: http://localhost:8080/admin/appuntamenti\n\n" +
+            "⚠️ IMPORTANTE: Rispondi entro 24 ore per non perdere il cliente!\n\n" +
+            "Servizi Edili Elvis SRL - Sistema Gestionale"
+        );
+        
+        mailSender.send(message);
+    }
+    
+    /**
+     * Invia notifica email all'admin quando arriva un nuovo contatto.
+     * 
+     * @param contatto Il nuovo messaggio di contatto ricevuto
+     */
+    public void inviaNotificaAdminNuovoContatto(Contatto contatto) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(fromEmail);
+        message.setTo("trandafiralinvalentin@gmail.com"); // Email admin
+        message.setSubject("💬 NUOVO MESSAGGIO CONTATTO - " + contatto.getNome());
+        
+        message.setText(
+            "💬 NUOVO MESSAGGIO DA LEGGERE\n\n" +
+            "Un visitatore ha inviato un messaggio dal form contatti del sito.\n\n" +
+            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+            "Da: " + contatto.getNome() + "\n" +
+            "Email: " + contatto.getEmail() + "\n" +
+            "Telefono: " + (contatto.getTelefono() != null ? contatto.getTelefono() : "Non fornito") + "\n\n" +
+            "Messaggio:\n" +
+            contatto.getMessaggio() + "\n\n" +
+            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+            "👉 Rispondi dalla dashboard: http://localhost:8080/admin/contatti\n\n" +
+            "Servizi Edili Elvis SRL - Sistema Gestionale"
+        );
+        
+        mailSender.send(message);
+    }
+    
+    /**
      * Invia email di RIFIUTO/INDISPONIBILITÀ per l'appuntamento richiesto.
      * 
      * Questa email viene inviata quando l'admin clicca "Rifiuta" su un appuntamento IN_ATTESA

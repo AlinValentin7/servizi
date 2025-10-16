@@ -46,11 +46,22 @@ public class ContattoService {
      * sul sito pubblico. Il contatto viene salvato con stato "non letto" (letto=false)
      * e con la data/ora di invio automatica.
      * 
+     * IMPORTANTE: Invia anche notifica email all'admin per avvisarlo.
+     * 
      * @param contatto L'oggetto Contatto da salvare (contiene nome, email, messaggio, ecc.)
      * @return Il contatto salvato con l'ID generato dal database
      */
     public Contatto salvaContatto(Contatto contatto) {
-        return contattoRepository.save(contatto);
+        Contatto saved = contattoRepository.save(contatto);
+        
+        // Invia notifica email all'admin (NON bloccante)
+        try {
+            emailService.inviaNotificaAdminNuovoContatto(saved);
+        } catch (Exception e) {
+            logger.warn("Impossibile inviare notifica admin per contatto ID: {}. Errore: {}", saved.getId(), e.getMessage());
+        }
+        
+        return saved;
     }
     
     /**

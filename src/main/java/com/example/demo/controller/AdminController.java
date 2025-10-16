@@ -6,6 +6,9 @@ import com.example.demo.model.Contatto;
 import com.example.demo.service.LavoroService;
 import com.example.demo.service.AppuntamentoService;
 import com.example.demo.service.ContattoService;
+import com.example.demo.service.StatisticheService;
+import com.example.demo.service.BackupService;
+import com.example.demo.service.ReminderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +38,15 @@ public class AdminController {
     @Autowired
     private ContattoService contattoService;
     
+    @Autowired
+    private StatisticheService statisticheService;
+    
+    @Autowired
+    private BackupService backupService;
+    
+    @Autowired
+    private ReminderService reminderService;
+    
     private static final String UPLOAD_DIR = "src/main/resources/static/uploads/";
 
     @GetMapping("/login")
@@ -47,10 +59,44 @@ public class AdminController {
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
+        // Dati base per la dashboard
         model.addAttribute("appuntamenti", appuntamentoService.getAllAppuntamenti());
         model.addAttribute("contatti", contattoService.getContattiNonLetti());
         model.addAttribute("lavori", lavoroService.getAllLavori());
+        
+        // NUOVO: Statistiche complete per analytics
+        model.addAttribute("stats", statisticheService.getStatisticheDashboard());
+        model.addAttribute("statsMensili", statisticheService.getStatisticheMensili(6)); // Ultimi 6 mesi
+        
         return "admin/dashboard";
+    }
+    
+    /**
+     * Endpoint per eseguire backup manuale on-demand.
+     */
+    @PostMapping("/backup")
+    public String eseguiBackup(RedirectAttributes redirectAttributes) {
+        boolean successo = backupService.backupManuale();
+        if (successo) {
+            redirectAttributes.addFlashAttribute("success", "✅ Backup eseguito con successo!");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "❌ Errore durante il backup. Controlla i log.");
+        }
+        return "redirect:/admin/dashboard";
+    }
+    
+    /**
+     * Endpoint per inviare reminder manuale a un appuntamento specifico.
+     */
+    @PostMapping("/appuntamenti/{id}/reminder")
+    public String inviaReminder(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        boolean inviato = reminderService.inviaReminderManuale(id);
+        if (inviato) {
+            redirectAttributes.addFlashAttribute("success", "✅ Reminder inviato al cliente!");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "⚠️ Impossibile inviare reminder. Verifica che l'appuntamento sia confermato.");
+        }
+        return "redirect:/admin/appuntamenti";
     }
 
     // CRUD Lavori
