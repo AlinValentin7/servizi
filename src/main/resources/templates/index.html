@@ -13,6 +13,7 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/cookies.css}">
 </head>
 <body>
     <header>
@@ -193,11 +194,17 @@
             </div>
         </div>
         <p style="margin-top: 1rem;">&copy; 2025 Servizi Edili Elvis SRL - P.IVA 12345678901</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="/privacy-policy" style="color: rgba(255,255,255,0.7); margin: 0 0.5rem;">Privacy Policy</a> |
+            <a href="/cookie-policy" style="color: rgba(255,255,255,0.7); margin: 0 0.5rem;">Cookie Policy</a> |
+            <a onclick="window.openCookieSettings()" class="footer-cookie-link" style="margin: 0 0.5rem;">Gestisci Cookie</a>
+        </p>
         <span class="firma-discreta">Firmato $₿420</span>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/cookies.js}"></script>
 </body>
 </html>

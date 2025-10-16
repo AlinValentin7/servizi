@@ -4,7 +4,69 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+# ============================================
+# DATI SENSIBILI - NON COMMITTARE MAI!
+# ============================================
+.env
+*.env
+!.env.example
+application-local.properties
+secrets/
+
+# ============================================
+# DATABASE (H2 e altri)
+# ============================================
+/data/
+*.db
+*.mv.db
+*.trace.db
+*.lock.db
+
+# ============================================
+# LOGS
+# ============================================
+/logs/
+*.log
+*.log.*
+*.gz
+
+# ============================================
+# FILE UPLOAD (immagini caricate dagli utenti)
+# ============================================
+/uploads/
+/src/main/resources/static/uploads/
+*.jpg
+*.jpeg
+*.png
+*.gif
+!src/main/resources/static/images/
+!src/main/resources/static/favicon.ico
+
+# ============================================
+# BACKUP
+# ============================================
+/backups/
+*.backup
+*.bak
+*.sql
+
+# ============================================
+# GUIDE E DOCUMENTAZIONE (solo locali)
+# ============================================
+DEPLOY_GUIDE.md
+PRODUCTION_CHECKLIST.md
+README_DEPLOY.md
+COOKIE_SYSTEM_RIEPILOGO.md
+API_DOCUMENTATION.md
+
+# ============================================
+# FILE DI DEPLOY
+# ============================================
+deploy.sh
+deploy.bat
+nginx.conf
+
+### STS / Eclipse ###
 .apt_generated
 .classpath
 .factorypath
@@ -31,3 +93,49 @@ build/
 
 ### VS Code ###
 .vscode/
+*.code-workspace
+
+# ============================================
+# OS TEMP FILES
+# ============================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+.directory
+
+# ============================================
+# TEMPORARY FILES
+# ============================================
+*.tmp
+*.swp
+*.swo
+*~.nib
+*.class
+
+# ============================================
+# SSL CERTIFICATES (se presenti)
+# ============================================
+*.p12
+*.jks
+*.keystore
+*.pem
+*.key
+*.crt
+
+# ============================================
+# SPRING BOOT
+# ============================================
+.springBeans
+spring-boot-devtools.properties

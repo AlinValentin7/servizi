@@ -1,5 +1,9 @@
 package com.example.demo.controller;
 
+// COMMENTATO PER PRODUZIONE - 2025-10-17
+// Controller di test per le pagine di errore - da usare solo in sviluppo
+
+/*
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +35,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  * @author Firmato $₿420
  * @since 2025
  */
+/*
 @Controller
 @RequestMapping("/test-errors")
 public class ErrorTestController {
@@ -38,6 +43,7 @@ public class ErrorTestController {
     /**
      * Pagina menu per testare tutti gli errori
      */
+/*
     @GetMapping
     public String errorMenu() {
         return "test-errors-menu";
@@ -47,6 +53,7 @@ public class ErrorTestController {
      * Simula errore 404 - Pagina Non Trovata
      * Url: http://localhost:8080/test-errors/404
      */
+/*
     @GetMapping("/404")
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String test404() throws NoHandlerFoundException {
@@ -57,6 +64,7 @@ public class ErrorTestController {
      * Simula errore 500 - Errore Interno del Server
      * Url: http://localhost:8080/test-errors/500
      */
+/*
     @GetMapping("/500")
     public String test500() {
         // Lancia una RuntimeException per simulare un errore interno
@@ -70,6 +78,7 @@ public class ErrorTestController {
      * NOTA: Per testare veramente il 403, prova ad accedere a:
      * http://localhost:8080/admin/dashboard (senza essere loggato)
      */
+/*
     @GetMapping("/403")
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public String test403() {
@@ -80,6 +89,7 @@ public class ErrorTestController {
      * Simula errore 400 - Richiesta Non Valida
      * Url: http://localhost:8080/test-errors/400
      */
+/*
     @GetMapping("/400")
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String test400() {
@@ -90,6 +100,7 @@ public class ErrorTestController {
      * Simula errore 503 - Servizio Non Disponibile
      * Url: http://localhost:8080/test-errors/503
      */
+/*
     @GetMapping("/503")
     @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     public String test503() {
@@ -100,6 +111,7 @@ public class ErrorTestController {
      * Simula un NullPointerException (genera 500)
      * Url: http://localhost:8080/test-errors/null
      */
+/*
     @GetMapping("/null")
     public String testNullPointer() {
         String str = null;
@@ -111,9 +123,11 @@ public class ErrorTestController {
      * Simula una divisione per zero (genera 500)
      * Url: http://localhost:8080/test-errors/divide
      */
+/*
     @GetMapping("/divide")
     public String testDivideByZero() {
         int result = 10 / 0; // Genera ArithmeticException
         return "redirect:/";
     }
 }
+*/
