@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Pagine Errore - Servizi Edili Elvis SRL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+        .test-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .test-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #0e3b2e;
+        }
+        .test-title h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .test-subtitle {
+            color: #6c757d;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .error-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .error-card {
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: white;
+        }
+        .error-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-color: #FF6B35;
+        }
+        .error-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .error-code {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0e3b2e;
+            margin-bottom: 0.5rem;
+        }
+        .error-name {
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+        .test-btn {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 10px;
+            font-weight: 600;
+            border: none;
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .test-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .warning-icon {
+            font-size: 2rem;
+            color: #ffc107;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 2rem;
+            background: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background: #5a6268;
+            color: white;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-title">
+            <h1>🧪 Test Pagine Errore</h1>
+            <p class="test-subtitle">
+                Clicca su un pulsante per simulare l'errore corrispondente e vedere la pagina personalizzata
+            </p>
+        </div>
+
+        <div class="warning-box">
+            <div class="warning-icon">⚠️</div>
+            <div>
+                <strong>Nota:</strong> Questo controller è solo per testing/sviluppo.
+                Commentalo o rimuovilo prima di andare in produzione!
+            </div>
+        </div>
+
+        <div class="error-grid">
+            <!-- Errore 404 -->
+            <div class="error-card">
+                <div class="error-icon">🏗️</div>
+                <div class="error-code">404</div>
+                <div class="error-name">Pagina Non Trovata</div>
+                <button class="test-btn" onclick="window.location.href='/test-errors/404'">
+                    Testa 404
+                </button>
+            </div>
+
+            <!-- Errore 500 -->
+            <div class="error-card">
+                <div class="error-icon">🧱</div>
+                <div class="error-code">500</div>
+                <div class="error-name">Errore Interno</div>
+                <button class="test-btn" onclick="window.location.href='/test-errors/500'">
+                    Testa 500
+                </button>
+            </div>
+
+            <!-- Errore 403 -->
+            <div class="error-card">
+                <div class="error-icon">⛔</div>
+                <div class="error-code">403</div>
+                <div class="error-name">Accesso Negato</div>
+                <button class="test-btn" onclick="window.location.href='/test-errors/403'">
+                    Testa 403
+                </button>
+            </div>
+
+            <!-- Errore 400 -->
+            <div class="error-card">
+                <div class="error-icon">📏</div>
+                <div class="error-code">400</div>
+                <div class="error-name">Richiesta Non Valida</div>
+                <button class="test-btn" onclick="window.location.href='/test-errors/400'">
+                    Testa 400
+                </button>
+            </div>
+
+            <!-- Errore 503 -->
+            <div class="error-card">
+                <div class="error-icon">☕</div>
+                <div class="error-code">503</div>
+                <div class="error-name">Servizio Non Disponibile</div>
+                <button class="test-btn" onclick="window.location.href='/test-errors/503'">
+                    Testa 503
+                </button>
+            </div>
+
+            <!-- NullPointer (500) -->
+            <div class="error-card">
+                <div class="error-icon">💥</div>
+                <div class="error-code">NPE</div>
+                <div class="error-name">Null Pointer</div>
+                <button class="test-btn" onclick="window.location.href='/test-errors/null'">
+                    Testa NPE
+                </button>
+            </div>
+        </div>
+
+        <hr style="margin: 2rem 0;">
+
+        <h3 style="color: #0e3b2e; margin-bottom: 1rem;">
+            <i class="bi bi-info-circle me-2"></i>Altri Modi per Testare:
+        </h3>
+        
+        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px;">
+            <ul style="margin-bottom: 0;">
+                <li class="mb-2">
+                    <strong>404 reale:</strong> Vai su 
+                    <a href="/pagina-inesistente">/pagina-inesistente</a>
+                </li>
+                <li class="mb-2">
+                    <strong>403 reale:</strong> Vai su 
+                    <a href="/admin/dashboard">/admin/dashboard</a> (senza login)
+                </li>
+                <li class="mb-2">
+                    <strong>API 404:</strong> 
+                    <code>curl http://localhost:8080/api/lavori/99999</code>
+                </li>
+                <li>
+                    <strong>API 400:</strong> 
+                    <code>curl -X POST http://localhost:8080/api/contatti -d '{}'</code>
+                </li>
+            </ul>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="/" class="back-btn">
+                <i class="bi bi-house me-2"></i>Torna alla Home
+            </a>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 2rem; color: white;">
+        <p>Firmato $₿420 | 2025</p>
+    </div>
+</body>
+</html>
