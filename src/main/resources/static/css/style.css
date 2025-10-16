@@ -69,7 +69,7 @@ nav { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-b
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(14, 59, 46, 0.70), rgba(14, 59, 46, 0.70)), url('/images/hero-bg.jpg') center/cover;
+    background: linear-gradient(135deg, var(--verde-primario) 0%, var(--verde-secondario) 50%, var(--verde-chiaro) 100%);
     color: var(--bianco);
     text-align: center;
     padding: 5rem 2rem;

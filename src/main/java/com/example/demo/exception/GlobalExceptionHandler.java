@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -113,6 +114,29 @@ public class GlobalExceptionHandler {
         }
         
         return "redirect:/admin/dashboard";
+    }
+    
+    /**
+     * Gestisce errore risorse statiche mancanti (es: favicon.ico).
+     * 
+     * Questo evita di loggare errori per richieste automatiche del browser
+     * che cercano favicon.ico, robots.txt, etc.
+     */
+    @ExceptionHandler(NoResourceFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleNoResourceFound(NoResourceFoundException ex, HttpServletRequest request) {
+        String resourcePath = ex.getResourcePath();
+        
+        // Non loggare errori per favicon e altre risorse browser comuni
+        if (resourcePath != null && (resourcePath.contains("favicon.ico") || 
+                                     resourcePath.contains("robots.txt") ||
+                                     resourcePath.contains("apple-touch-icon"))) {
+            // Silenziosamente ignora queste richieste
+            return null;
+        }
+        
+        System.err.println("❌ Risorsa statica non trovata: " + resourcePath);
+        return null;
     }
     
     /**
