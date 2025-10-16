@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Lavoro - Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span class="logo-icon">🏗️</span>
+                Admin - Servizi Edili Elvis SRL
+            </div>
+            <div class="nav-links">
+                <a href="/admin/appuntamenti">Appuntamenti</a>
+                <a href="/admin/contatti">Contatti</a>
+                <a href="/admin/lavori">Lavori</a>
+                <a href="/">Sito Pubblico</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 th:text="${lavoro.id != null} ? '✏️ Modifica Lavoro' : '➕ Nuovo Lavoro'">Form Lavoro</h2>
+            </div>
+
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+            <form th:action="@{/admin/lavori/salva}" th:object="${lavoro}" method="post" enctype="multipart/form-data">
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-group">
+                    <label for="titolo">Titolo Lavoro *</label>
+                    <input type="text" class="form-control" id="titolo" th:field="*{titolo}" required>
+                </div>
+
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="categoria">Categoria *</label>
+                        <select class="form-control" id="categoria" th:field="*{categoria}" required>
+                            <option value="">Seleziona categoria</option>
+                            <option value="Ristrutturazione">Ristrutturazione</option>
+                            <option value="Imbiancatura">Imbiancatura</option>
+                            <option value="Muratura">Muratura</option>
+                            <option value="Impianti">Impianti</option>
+                            <option value="Infissi">Infissi</option>
+                            <option value="Pavimentazione">Pavimentazione</option>
+                            <option value="Altro">Altro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="luogo">Luogo</label>
+                        <input type="text" class="form-control" id="luogo" th:field="*{luogo}" placeholder="Roma, Milano...">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cliente">Cliente</label>
+                    <input type="text" class="form-control" id="cliente" th:field="*{cliente}">
+                </div>
+
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="dataInizio">Data Inizio</label>
+                        <input type="date" class="form-control" id="dataInizio" th:field="*{dataInizio}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dataFine">Data Fine</label>
+                        <input type="date" class="form-control" id="dataFine" th:field="*{dataFine}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="descrizione">Descrizione</label>
+                    <textarea class="form-control" id="descrizione" th:field="*{descrizione}" rows="5" 
+                              placeholder="Descrivi il lavoro eseguito..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" th:field="*{pubblicato}"> Pubblica sul sito
+                    </label>
+                </div>
+
+                <hr style="margin: 2rem 0;">
+
+                <h3 style="color: var(--verde-primario);">📸 Foto Prima</h3>
+                <div class="form-group">
+                    <label for="fotoPrimaFiles">Carica foto PRIMA del lavoro (puoi selezionare più file)</label>
+                    <input type="file" class="form-control" id="fotoPrimaFiles" name="fotoPrimaFiles" multiple accept="image/*">
+                    <small>Formati supportati: JPG, PNG, GIF (max 10MB per file)</small>
+                </div>
+
+                <div th:if="${lavoro.fotoPrima != null && !lavoro.fotoPrima.isEmpty()}" style="margin: 1rem 0;">
+                    <p><strong>Foto esistenti PRIMA:</strong></p>
+                    <div class="grid">
+                        <div th:each="foto : ${lavoro.fotoPrima}">
+                            <img th:src="${foto}" alt="Foto Prima" style="width: 100%; height: 200px; object-fit: cover; border-radius: 5px;">
+                        </div>
+                    </div>
+                </div>
+
+                <hr style="margin: 2rem 0;">
+
+                <h3 style="color: var(--verde-primario);">✨ Foto Dopo</h3>
+                <div class="form-group">
+                    <label for="fotoDopoFiles">Carica foto DOPO del lavoro (puoi selezionare più file)</label>
+                    <input type="file" class="form-control" id="fotoDopoFiles" name="fotoDopoFiles" multiple accept="image/*">
+                    <small>Formati supportati: JPG, PNG, GIF (max 10MB per file)</small>
+                </div>
+
+                <div th:if="${lavoro.fotoDopo != null && !lavoro.fotoDopo.isEmpty()}" style="margin: 1rem 0;">
+                    <p><strong>Foto esistenti DOPO:</strong></p>
+                    <div class="grid">
+                        <div th:each="foto : ${lavoro.fotoDopo}">
+                            <img th:src="${foto}" alt="Foto Dopo" style="width: 100%; height: 200px; object-fit: cover; border-radius: 5px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; text-align: center;">
+                    <button type="submit" class="btn btn-primary">💾 Salva Lavoro</button>
+                    <a href="/admin/lavori" class="btn btn-secondary">Annulla</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p style="text-align: center; padding: 1rem;">&copy; 2025 Servizi Edili Elvis SRL</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Lavoro - Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        .admin-header {
+            background-color: var(--verde-primario);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .admin-nav {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .admin-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+        
+        .form-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--marrone-scuro);
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--beige-primario);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--verde-primario);
+        }
+        
+        .file-upload-area {
+            border: 2px dashed var(--beige-primario);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-upload-area:hover {
+            border-color: var(--verde-primario);
+            background-color: var(--beige-primario);
+        }
+        
+        .preview-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .preview-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid var(--beige-primario);
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background-color: var(--verde-primario);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <h1 th:text="${lavoro.id != null ? '✏️ Modifica Lavoro' : '➕ Nuovo Lavoro'}">Form Lavoro</h1>
+        <div class="admin-nav">
+            <a href="/admin/dashboard">Dashboard</a>
+            <a href="/admin/lavori">Gestione Lavori</a>
+            <a href="/admin/appuntamenti">Appuntamenti</a>
+            <a href="/admin/contatti">Contatti</a>
+            <form th:action="@{/admin/logout}" method="post" style="display: inline;">
+                <button type="submit" style="background: none; border: none; color: white; cursor: pointer; padding: 0.5rem 1rem;">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <form th:action="@{/admin/lavori/salva}" method="post" enctype="multipart/form-data" th:object="${lavoro}">
+            <input type="hidden" th:field="*{id}">
+            
+            <div class="form-group">
+                <label for="titolo">Titolo *</label>
+                <input type="text" id="titolo" th:field="*{titolo}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="categoria">Categoria *</label>
+                <select id="categoria" th:field="*{categoria}" required>
+                    <option value="">Seleziona categoria</option>
+                    <option value="Ristrutturazione">Ristrutturazione</option>
+                    <option value="Imbiancatura">Imbiancatura</option>
+                    <option value="Pavimentazione">Pavimentazione</option>
+                    <option value="Muratura">Muratura</option>
+                    <option value="Idraulica">Idraulica</option>
+                    <option value="Elettrica">Elettrica</option>
+                    <option value="Tetti e Coperture">Tetti e Coperture</option>
+                    <option value="Altro">Altro</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="descrizione">Descrizione *</label>
+                <textarea id="descrizione" th:field="*{descrizione}" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="cliente">Cliente</label>
+                <input type="text" id="cliente" th:field="*{cliente}">
+            </div>
+            
+            <div class="form-group">
+                <label for="luogo">Luogo</label>
+                <input type="text" id="luogo" th:field="*{luogo}" placeholder="es. Roma, Via Roma 123">
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="dataInizio">Data Inizio</label>
+                    <input type="date" id="dataInizio" th:field="*{dataInizio}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="dataFine">Data Fine</label>
+                    <input type="date" id="dataFine" th:field="*{dataFine}">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Foto Prima (max 10 foto)</label>
+                <div class="file-upload-area" onclick="document.getElementById('fotoPrimaFiles').click()">
+                    <p>📸 Clicca per caricare le foto PRIMA dei lavori</p>
+                    <input type="file" id="fotoPrimaFiles" name="fotoPrimaFiles" multiple accept="image/*" style="display: none;" onchange="previewImages(this, 'previewPrima')">
+                </div>
+                <div id="previewPrima" class="preview-images">
+                    <img th:each="foto : ${lavoro.fotoPrima}" th:src="${foto}" class="preview-image" alt="Foto Prima">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Foto Dopo (max 10 foto)</label>
+                <div class="file-upload-area" onclick="document.getElementById('fotoDopoFiles').click()">
+                    <p>📸 Clicca per caricare le foto DOPO dei lavori</p>
+                    <input type="file" id="fotoDopoFiles" name="fotoDopoFiles" multiple accept="image/*" style="display: none;" onchange="previewImages(this, 'previewDopo')">
+                </div>
+                <div id="previewDopo" class="preview-images">
+                    <img th:each="foto : ${lavoro.fotoDopo}" th:src="${foto}" class="preview-image" alt="Foto Dopo">
+                </div>
+            </div>
+            
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="pubblicato" th:field="*{pubblicato}">
+                <label for="pubblicato" style="margin: 0;">Pubblica immediatamente</label>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">💾 Salva Lavoro</button>
+                <a href="/admin/lavori" class="btn btn-secondary">❌ Annulla</a>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        function previewImages(input, previewId) {
+            const preview = document.getElementById(previewId);
+            preview.innerHTML = '';
+            
+            if (input.files) {
+                Array.from(input.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'preview-image';
+                        preview.appendChild(img);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${lavoro.titolo} + ' - Servizi Edili Elvis SRL'">Dettaglio Lavoro</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span class="logo-icon">🏗️</span>
+                Servizi Edili Elvis SRL
+            </div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/prenota">Prenota Appuntamento</a>
+                <a href="/lavori">I Nostri Lavori</a>
+                <a href="/contatti">Contatti</a>
+                <a href="/admin/login" style="color: #ffd700;" title="Area Admin">🔐</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2 th:text="${lavoro.titolo}" style="color: var(--verde-primario); text-align: center;">Titolo Lavoro</h2>
+            
+            <div style="margin: 2rem 0;">
+                <p><strong>Categoria:</strong> <span th:text="${lavoro.categoria}">Categoria</span></p>
+                <p><strong>Cliente:</strong> <span th:text="${lavoro.cliente}">Cliente</span></p>
+                <p><strong>Luogo:</strong> <span th:text="${lavoro.luogo}">Luogo</span></p>
+                <p><strong>Data Inizio:</strong> <span th:text="${lavoro.dataInizio}">Data</span></p>
+                <p><strong>Data Fine:</strong> <span th:text="${lavoro.dataFine}">Data</span></p>
+            </div>
+
+            <div style="margin: 2rem 0;">
+                <h3 style="color: var(--verde-primario);">Descrizione</h3>
+                <p th:text="${lavoro.descrizione}">Descrizione del lavoro</p>
+            </div>
+
+            <div style="margin: 2rem 0;">
+                <h3 style="color: var(--verde-primario); text-align: center;">📸 Foto Prima</h3>
+                <div class="grid">
+                    <div th:each="foto : ${lavoro.fotoPrima}" style="position: relative;">
+                        <img th:src="${foto}" alt="Foto Prima" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;">
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin: 2rem 0;">
+                <h3 style="color: var(--verde-primario); text-align: center;">✨ Foto Dopo</h3>
+                <div class="grid">
+                    <div th:each="foto : ${lavoro.fotoDopo}" style="position: relative;">
+                        <img th:src="${foto}" alt="Foto Dopo" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;">
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="/lavori" class="btn btn-secondary">← Torna ai Lavori</a>
+                <a href="/prenota" class="btn btn-primary">Prenota un Appuntamento</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <h3>Servizi Edili Elvis SRL</h3>
+                <p>📍 Via Roma, 123 - 00100 Roma</p>
+                <p>📞 Tel: +39 3801590128</p>
+                <p>📧 Email: trandafiralinvalentin@gmail.com</p>
+            </div>
+        </div>
+        <p style="margin-top: 1rem;">&copy; 2025 Servizi Edili Elvis SRL - P.IVA 12345678901</p>
+    </footer>
+</body>
+</html>

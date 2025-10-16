@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Contatti - Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span class="logo-icon">🏗️</span>
+                Admin - Servizi Edili Elvis SRL
+            </div>
+            <div class="nav-links">
+                <a href="/admin/appuntamenti">Appuntamenti</a>
+                <a href="/admin/contatti">Contatti</a>
+                <a href="/admin/lavori">Lavori</a>
+                <a href="/">Sito Pubblico</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>📧 Gestione Contatti</h2>
+                <span th:if="${nonLetti > 0}" class="badge badge-warning" style="margin-left: 1rem;">
+                    <span th:text="${nonLetti}">0</span> non letti
+                </span>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Telefono</th>
+                        <th>Data Invio</th>
+                        <th>Stato</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="contatto : ${contatti}" th:style="${!contatto.letto} ? 'font-weight: bold; background-color: #fff3cd;' : ''">
+                        <td th:text="${contatto.id}">1</td>
+                        <td th:text="${contatto.nome}">Nome</td>
+                        <td th:text="${contatto.email}">email@email.com</td>
+                        <td th:text="${contatto.telefono}">+39 123 456789</td>
+                        <td th:text="${#temporals.format(contatto.dataInvio, 'dd/MM/yyyy HH:mm')}">01/01/2025 10:00</td>
+                        <td>
+                            <span class="badge" th:classappend="${contatto.letto} ? 'badge-success' : 'badge-warning'" 
+                                  th:text="${contatto.letto} ? 'Letto' : 'Non Letto'">Stato</span>
+                        </td>
+                        <td>
+                            <a th:href="@{/admin/contatti/{id}(id=${contatto.id})}" class="btn btn-primary" style="padding: 0.3rem 0.8rem;">👁️ Visualizza</a>
+                            <form th:action="@{/admin/contatti/{id}/elimina(id=${contatto.id})}" method="post" style="display: inline;" onsubmit="return confirm('Sei sicuro di voler eliminare questo contatto?')">
+                                <button type="submit" class="btn btn-secondary" style="padding: 0.3rem 0.8rem;">🗑️</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div th:if="${contatti.isEmpty()}" style="text-align: center; padding: 2rem;">
+                <p>Nessun messaggio di contatto presente.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p style="text-align: center; padding: 1rem;">&copy; 2025 Servizi Edili Elvis SRL</p>
+    </footer>
+</body>
+</html>

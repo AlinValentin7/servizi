@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appuntamento Confermato - Servizi Edili Elvis SRL</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span class="logo-icon">🏗️</span>
+                Servizi Edili Elvis SRL
+            </div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/prenota">Prenota Appuntamento</a>
+                <a href="/lavori">I Nostri Lavori</a>
+                <a href="/contatti">Contatti</a>
+                <a href="/admin/login" style="color: #ffd700;" title="Area Admin">🔐</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 4rem; color: var(--verde-primario);">✅</div>
+            <h2 style="color: var(--verde-primario); margin: 1rem 0;">Appuntamento Confermato!</h2>
+            
+            <div class="alert alert-success">
+                <p><strong>Il tuo appuntamento è stato registrato con successo!</strong></p>
+                <p>Riceverai una email di conferma all'indirizzo fornito.</p>
+            </div>
+
+            <div style="margin: 2rem 0; padding: 2rem; background-color: var(--beige-primario); border-radius: 10px;">
+                <h3 style="color: var(--verde-primario);">💬 Contattaci anche su WhatsApp</h3>
+                <p>Per confermare l'appuntamento o per qualsiasi chiarimento, puoi contattarci direttamente su WhatsApp!</p>
+                <a th:href="${whatsappLink}" class="btn btn-primary" style="background-color: #25D366; margin-top: 1rem; font-size: 1.1rem;">
+                    📱 Apri WhatsApp
+                </a>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <a href="/" class="btn btn-secondary">🏠 Torna alla Home</a>
+                <a href="/prenota" class="btn">📅 Prenota un altro appuntamento</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <h3>Servizi Edili Elvis SRL</h3>
+                <p>📍 Via Roma, 123 - 00100 Roma</p>
+                <p>📞 Tel: +39 3801590128</p>
+                <p>📧 Email: trandafiralinvalentin@gmail.com</p>
+            </div>
+        </div>
+        <p style="margin-top: 1rem;">&copy; 2025 Servizi Edili Elvis SRL - P.IVA 12345678901</p>
+    </footer>
+</body>
+</html>

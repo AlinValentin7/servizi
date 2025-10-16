@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin - Servizi Edili Elvis</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--verde-primario) 0%, var(--verde-scuro) 100%);
+        }
+        
+        .login-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .login-box h2 {
+            color: var(--verde-primario);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-box .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .login-box label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--marrone-scuro);
+            font-weight: bold;
+        }
+        
+        .login-box input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--beige-primario);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .login-box input:focus {
+            outline: none;
+            border-color: var(--verde-primario);
+        }
+        
+        .login-box .btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--verde-primario);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .login-box .btn:hover {
+            background-color: var(--verde-scuro);
+        }
+        
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .back-link a {
+            color: var(--verde-primario);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>🔐 Admin Login</h2>
+            
+            <div th:if="${error}" class="error-message">
+                <span th:text="${error}">Errore di login</span>
+            </div>
+            
+            <form th:action="@{/admin/login}" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required autofocus>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="btn">Accedi</button>
+            </form>
+            
+            <div class="back-link">
+                <a href="/">← Torna al sito</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

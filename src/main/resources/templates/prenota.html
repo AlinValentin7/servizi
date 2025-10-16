@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prenota Appuntamento - Servizi Edili Elvis SRL</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span class="logo-icon">🏗️</span>
+                Servizi Edili Elvis SRL
+            </div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/prenota">Prenota Appuntamento</a>
+                <a href="/lavori">I Nostri Lavori</a>
+                <a href="/contatti">Contatti</a>
+                <a href="/admin/login" style="color: #ffd700;" title="Area Admin">🔐</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>📅 Prenota un Appuntamento</h2>
+            </div>
+
+            <p style="text-align: center; margin-bottom: 2rem;">Compila il form per prenotare un appuntamento. Riceverai una conferma via email e potrai anche contattarci tramite WhatsApp.</p>
+
+            <form th:action="@{/prenota}" th:object="${appuntamento}" method="post">
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="nomeCliente">Nome *</label>
+                        <input type="text" class="form-control" id="nomeCliente" th:field="*{nomeCliente}" required>
+                        <span class="error" th:if="${#fields.hasErrors('nomeCliente')}" th:errors="*{nomeCliente}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cognomeCliente">Cognome *</label>
+                        <input type="text" class="form-control" id="cognomeCliente" th:field="*{cognomeCliente}" required>
+                        <span class="error" th:if="${#fields.hasErrors('cognomeCliente')}" th:errors="*{cognomeCliente}"></span>
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono">Telefono *</label>
+                        <input type="tel" class="form-control" id="telefono" th:field="*{telefono}" placeholder="+39 123 4567890" required>
+                        <span class="error" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></span>
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="dataAppuntamento">Data e Ora Appuntamento *</label>
+                        <input type="datetime-local" class="form-control" id="dataAppuntamento" th:field="*{dataAppuntamento}" required>
+                        <span class="error" th:if="${#fields.hasErrors('dataAppuntamento')}" th:errors="*{dataAppuntamento}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tipoServizio">Tipo di Servizio *</label>
+                        <select class="form-control" id="tipoServizio" th:field="*{tipoServizio}" required>
+                            <option value="">Seleziona un servizio</option>
+                            <option value="Ristrutturazione">Ristrutturazione</option>
+                            <option value="Imbiancatura">Imbiancatura</option>
+                            <option value="Muratura">Muratura</option>
+                            <option value="Impianti Elettrici">Impianti Elettrici</option>
+                            <option value="Impianti Idraulici">Impianti Idraulici</option>
+                            <option value="Infissi">Infissi e Serramenti</option>
+                            <option value="Pavimentazione">Pavimentazione</option>
+                            <option value="Altro">Altro</option>
+                        </select>
+                        <span class="error" th:if="${#fields.hasErrors('tipoServizio')}" th:errors="*{tipoServizio}"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="indirizzo">Indirizzo Intervento</label>
+                    <input type="text" class="form-control" id="indirizzo" th:field="*{indirizzo}" placeholder="Via, Città, CAP">
+                </div>
+
+                <div class="form-group">
+                    <label for="descrizione">Descrizione del Lavoro</label>
+                    <textarea class="form-control" id="descrizione" th:field="*{descrizione}" rows="5" placeholder="Descrivi brevemente il lavoro da eseguire..."></textarea>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary">📅 Prenota Appuntamento</button>
+                    <a href="/" class="btn btn-secondary">Annulla</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <h3>Servizi Edili Elvis SRL</h3>
+                <p>📍 Via Roma, 123 - 00100 Roma</p>
+                <p>📞 Tel: +39 3801590128</p>
+                <p>📧 Email: trandafiralinvalentin@gmail.com</p>
+            </div>
+        </div>
+        <p style="margin-top: 1rem;">&copy; 2025 Servizi Edili Elvis SRL - P.IVA 12345678901</p>
+    </footer>
+</body>
+</html>

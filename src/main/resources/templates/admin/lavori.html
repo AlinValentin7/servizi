@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Lavori - Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span class="logo-icon">🏗️</span>
+                Admin - Servizi Edili Elvis SRL
+            </div>
+            <div class="nav-links">
+                <a href="/admin/appuntamenti">Appuntamenti</a>
+                <a href="/admin/contatti">Contatti</a>
+                <a href="/admin/lavori">Lavori</a>
+                <a href="/">Sito Pubblico</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>🏗️ Gestione Lavori</h2>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <a href="/admin/lavori/nuovo" class="btn btn-primary">➕ Aggiungi Nuovo Lavoro</a>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Titolo</th>
+                        <th>Categoria</th>
+                        <th>Luogo</th>
+                        <th>Data Fine</th>
+                        <th>Pubblicato</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="lavoro : ${lavori}">
+                        <td th:text="${lavoro.id}">1</td>
+                        <td th:text="${lavoro.titolo}">Titolo</td>
+                        <td th:text="${lavoro.categoria}">Categoria</td>
+                        <td th:text="${lavoro.luogo}">Luogo</td>
+                        <td th:text="${lavoro.dataFine}">01/01/2025</td>
+                        <td>
+                            <span class="badge" th:classappend="${lavoro.pubblicato} ? 'badge-success' : 'badge-danger'" 
+                                  th:text="${lavoro.pubblicato} ? 'Sì' : 'No'">Stato</span>
+                        </td>
+                        <td>
+                            <a th:href="@{/admin/lavori/{id}/modifica(id=${lavoro.id})}" class="btn btn-primary" style="padding: 0.3rem 0.8rem;">✏️ Modifica</a>
+                            <form th:action="@{/admin/lavori/{id}/elimina(id=${lavoro.id})}" method="post" style="display: inline;" onsubmit="return confirm('Sei sicuro di voler eliminare questo lavoro?')">
+                                <button type="submit" class="btn btn-secondary" style="padding: 0.3rem 0.8rem;">🗑️</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div th:if="${lavori.isEmpty()}" style="text-align: center; padding: 2rem;">
+                <p>Nessun lavoro presente. Aggiungi il tuo primo lavoro!</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p style="text-align: center; padding: 1rem;">&copy; 2025 Servizi Edili Elvis SRL</p>
+    </footer>
+</body>
+</html>

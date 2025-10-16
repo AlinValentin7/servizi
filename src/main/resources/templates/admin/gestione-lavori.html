@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Lavori - Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        .admin-header {
+            background-color: var(--verde-primario);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .admin-nav {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .admin-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+        
+        .admin-nav a:hover {
+            background-color: var(--verde-scuro);
+        }
+        
+        .alert {
+            padding: 1rem;
+            margin: 1rem 2rem;
+            border-radius: 5px;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .lavori-table {
+            margin: 2rem;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .lavori-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .lavori-table th {
+            background-color: var(--verde-primario);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .lavori-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .btn-small {
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--verde-primario);
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #000;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        
+        .status-pubblicato {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .status-bozza {
+            background-color: #6c757d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <h1>🏗️ Gestione Lavori</h1>
+        <div class="admin-nav">
+            <a href="/admin/dashboard">Dashboard</a>
+            <a href="/admin/lavori">Gestione Lavori</a>
+            <a href="/admin/appuntamenti">Appuntamenti</a>
+            <a href="/admin/contatti">Contatti</a>
+            <a href="/">Vai al Sito</a>
+            <form th:action="@{/admin/logout}" method="post" style="display: inline;">
+                <button type="submit" style="background: none; border: none; color: white; cursor: pointer; padding: 0.5rem 1rem;">Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <div th:if="${success}" class="alert alert-success">
+        <span th:text="${success}"></span>
+    </div>
+    
+    <div th:if="${error}" class="alert alert-error">
+        <span th:text="${error}"></span>
+    </div>
+
+    <div style="padding: 2rem;">
+        <a href="/admin/lavori/nuovo" class="btn" style="background-color: var(--verde-primario); color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 5px;">
+            ➕ Aggiungi Nuovo Lavoro
+        </a>
+    </div>
+
+    <div class="lavori-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titolo</th>
+                    <th>Categoria</th>
+                    <th>Cliente</th>
+                    <th>Luogo</th>
+                    <th>Stato</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="lavoro : ${lavori}">
+                    <td th:text="${lavoro.id}">1</td>
+                    <td th:text="${lavoro.titolo}">Titolo Lavoro</td>
+                    <td th:text="${lavoro.categoria}">Categoria</td>
+                    <td th:text="${lavoro.cliente}">Cliente</td>
+                    <td th:text="${lavoro.luogo}">Luogo</td>
+                    <td>
+                        <span th:class="${lavoro.pubblicato ? 'status-badge status-pubblicato' : 'status-badge status-bozza'}"
+                              th:text="${lavoro.pubblicato ? 'Pubblicato' : 'Bozza'}">
+                        </span>
+                    </td>
+                    <td>
+                        <a th:href="@{/admin/lavori/modifica/{id}(id=${lavoro.id})}" class="btn-small btn-primary">✏️ Modifica</a>
+                        
+                        <form th:action="@{/admin/lavori/toggle-pubblicazione/{id}(id=${lavoro.id})}" method="post" style="display: inline;">
+                            <button type="submit" class="btn-small btn-warning">
+                                <span th:text="${lavoro.pubblicato ? '👁️ Nascondi' : '👁️ Pubblica'}"></span>
+                            </button>
+                        </form>
+                        
+                        <form th:action="@{/admin/lavori/elimina/{id}(id=${lavoro.id})}" method="post" style="display: inline;"
+                              onsubmit="return confirm('Sei sicuro di voler eliminare questo lavoro?');">
+                            <button type="submit" class="btn-small btn-danger">🗑️ Elimina</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

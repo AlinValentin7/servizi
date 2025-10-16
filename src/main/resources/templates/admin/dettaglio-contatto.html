@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettaglio Contatto - Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span class="logo-icon">🏗️</span>
+                Admin - Servizi Edili Elvis SRL
+            </div>
+            <div class="nav-links">
+                <a href="/admin/appuntamenti">Appuntamenti</a>
+                <a href="/admin/contatti">Contatti</a>
+                <a href="/admin/lavori">Lavori</a>
+                <a href="/">Sito Pubblico</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>📧 Dettaglio Contatto #<span th:text="${contatto.id}">1</span></h2>
+            </div>
+
+            <div style="margin: 2rem 0;">
+                <p><strong>Nome:</strong> <span th:text="${contatto.nome}">Nome</span></p>
+                <p><strong>Email:</strong> <span th:text="${contatto.email}">email@email.com</span></p>
+                <p><strong>Telefono:</strong> <span th:text="${contatto.telefono}">+39 123 456789</span></p>
+                <p><strong>Data Invio:</strong> <span th:text="${#temporals.format(contatto.dataInvio, 'dd/MM/yyyy HH:mm')}">01/01/2025 10:00</span></p>
+            </div>
+
+            <div style="background-color: var(--beige-primario); padding: 1.5rem; border-radius: 10px; margin: 2rem 0;">
+                <h3 style="color: var(--verde-primario);">Messaggio:</h3>
+                <p th:text="${contatto.messaggio}">Messaggio del cliente</p>
+            </div>
+
+            <div class="card" style="margin-top: 2rem;">
+                <h3 style="color: var(--verde-primario);">Rispondi al Cliente</h3>
+                <form th:action="@{/admin/contatti/{id}/rispondi(id=${contatto.id})}" method="post">
+                    <div class="form-group">
+                        <label for="risposta">Scrivi la tua risposta (verrà inviata via email):</label>
+                        <textarea class="form-control" id="risposta" name="risposta" rows="8" required 
+                                  placeholder="Gentile cliente, grazie per averci contattato..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">📨 Invia Risposta via Email</button>
+                    <a th:href="@{/admin/contatti}" class="btn btn-secondary">← Torna ai Contatti</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p style="text-align: center; padding: 1rem;">&copy; 2025 Servizi Edili Elvis SRL</p>
+    </footer>
+</body>
+</html>

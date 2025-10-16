@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Appuntamenti - Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <span class="logo-icon">🏗️</span>
+                Admin - Servizi Edili Elvis SRL
+            </div>
+            <div class="nav-links">
+                <a href="/admin/appuntamenti">Appuntamenti</a>
+                <a href="/admin/contatti">Contatti</a>
+                <a href="/admin/lavori">Lavori</a>
+                <a href="/">Sito Pubblico</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>📅 Gestione Appuntamenti</h2>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Email</th>
+                        <th>Telefono</th>
+                        <th>Data Appuntamento</th>
+                        <th>Servizio</th>
+                        <th>Stato</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="app : ${appuntamenti}">
+                        <td th:text="${app.id}">1</td>
+                        <td th:text="${app.nomeCliente} + ' ' + ${app.cognomeCliente}">Nome Cliente</td>
+                        <td th:text="${app.email}">email@email.com</td>
+                        <td th:text="${app.telefono}">+39 123 456789</td>
+                        <td th:text="${#temporals.format(app.dataAppuntamento, 'dd/MM/yyyy HH:mm')}">01/01/2025 10:00</td>
+                        <td th:text="${app.tipoServizio}">Servizio</td>
+                        <td>
+                            <span class="badge" 
+                                  th:classappend="${app.stato.name() == 'IN_ATTESA' ? 'badge-warning' : 
+                                                  (app.stato.name() == 'CONFERMATO' ? 'badge-info' : 
+                                                  (app.stato.name() == 'COMPLETATO' ? 'badge-success' : 'badge-danger'))}"
+                                  th:text="${app.stato}">STATO</span>
+                        </td>
+                        <td>
+                            <form th:action="@{/admin/appuntamenti/{id}/stato(id=${app.id})}" method="post" style="display: inline;">
+                                <select name="stato" onchange="this.form.submit()" class="form-control" style="width: auto; display: inline;">
+                                    <option value="IN_ATTESA" th:selected="${app.stato.name() == 'IN_ATTESA'}">In Attesa</option>
+                                    <option value="CONFERMATO" th:selected="${app.stato.name() == 'CONFERMATO'}">Confermato</option>
+                                    <option value="COMPLETATO" th:selected="${app.stato.name() == 'COMPLETATO'}">Completato</option>
+                                    <option value="ANNULLATO" th:selected="${app.stato.name() == 'ANNULLATO'}">Annullato</option>
+                                </select>
+                            </form>
+                            <form th:action="@{/admin/appuntamenti/{id}/elimina(id=${app.id})}" method="post" style="display: inline;" onsubmit="return confirm('Sei sicuro di voler eliminare questo appuntamento?')">
+                                <button type="submit" class="btn btn-secondary" style="padding: 0.3rem 0.8rem;">🗑️</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div th:if="${appuntamenti.isEmpty()}" style="text-align: center; padding: 2rem;">
+                <p>Nessun appuntamento presente.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p style="text-align: center; padding: 1rem;">&copy; 2025 Servizi Edili Elvis SRL</p>
+    </footer>
+</body>
+</html>
