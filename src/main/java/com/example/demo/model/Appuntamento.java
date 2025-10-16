@@ -39,6 +39,11 @@ public class Appuntamento {
     
     private LocalDateTime dataCreazione = LocalDateTime.now();
     
+    @Column(length = 2000)
+    private String motivazioneRifiuto;
+    
+    private LocalDateTime dataAnnullamento;
+    
     public enum StatoAppuntamento {
         IN_ATTESA, CONFERMATO, COMPLETATO, ANNULLATO
     }
@@ -130,5 +135,21 @@ public class Appuntamento {
 
     public void setDataCreazione(LocalDateTime dataCreazione) {
         this.dataCreazione = dataCreazione;
+    }
+    
+    public String getMotivazioneRifiuto() {
+        return motivazioneRifiuto;
+    }
+    
+    public void setMotivazioneRifiuto(String motivazioneRifiuto) {
+        this.motivazioneRifiuto = motivazioneRifiuto;
+    }
+    
+    public LocalDateTime getDataAnnullamento() {
+        return dataAnnullamento;
+    }
+    
+    public void setDataAnnullamento(LocalDateTime dataAnnullamento) {
+        this.dataAnnullamento = dataAnnullamento;
     }
 }

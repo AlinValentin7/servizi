@@ -124,6 +124,8 @@ public class AppuntamentoService {
         if (appuntamentoOpt.isPresent()) {
             Appuntamento app = appuntamentoOpt.get();
             app.setStato(Appuntamento.StatoAppuntamento.ANNULLATO);
+            app.setMotivazioneRifiuto(motivazione);
+            app.setDataAnnullamento(LocalDateTime.now());
             appuntamentoRepository.save(app);
             
             try {

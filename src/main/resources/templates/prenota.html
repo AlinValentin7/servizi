@@ -77,6 +77,7 @@
                     <div class="form-group">
                         <label for="dataAppuntamento">Data e Ora Appuntamento *</label>
                         <input type="datetime-local" class="form-control" id="dataAppuntamento" th:field="*{dataAppuntamento}" required>
+                        <small class="text-muted"><i class="bi bi-clock me-1"></i>Orari disponibili: dalle 8:00 alle 20:00</small>
                         <span class="error" th:if="${#fields.hasErrors('dataAppuntamento')}" th:errors="*{dataAppuntamento}"></span>
                     </div>
 
@@ -125,9 +126,54 @@
             </div>
         </div>
         <p style="margin-top: 1rem;">&copy; 2025 Servizi Edili Elvis SRL - P.IVA 12345678901</p>
+        <span class="firma-discreta">Firmato $₿420</span>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        // Validazione orario di lavoro: 8:00 - 20:00
+        document.addEventListener('DOMContentLoaded', function() {
+            const dataAppuntamentoInput = document.getElementById('dataAppuntamento');
+            const form = document.querySelector('form');
+            
+            if (dataAppuntamentoInput && form) {
+                // Imposta data minima (oggi)
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                dataAppuntamentoInput.min = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+                
+                // Validazione al submit
+                form.addEventListener('submit', function(e) {
+                    const selectedDateTime = new Date(dataAppuntamentoInput.value);
+                    const hour = selectedDateTime.getHours();
+                    
+                    if (hour < 8 || hour >= 20) {
+                        e.preventDefault();
+                        alert('⚠️ ORARIO NON DISPONIBILE\n\nGli appuntamenti sono possibili solo dalle 8:00 alle 20:00.\n\nPer favore, scegli un orario all\'interno della nostra fascia lavorativa.');
+                        dataAppuntamentoInput.focus();
+                        return false;
+                    }
+                });
+                
+                // Messaggio informativo quando si seleziona la data
+                dataAppuntamentoInput.addEventListener('change', function() {
+                    const selectedDateTime = new Date(this.value);
+                    const hour = selectedDateTime.getHours();
+                    
+                    if (hour < 8 || hour >= 20) {
+                        this.setCustomValidity('L\'orario deve essere tra le 8:00 e le 20:00');
+                        this.reportValidity();
+                    } else {
+                        this.setCustomValidity('');
+                    }
+                });
+            }
+        });
+    </script>
     <script th:src="@{/js/main.js}"></script>
 </body>
 </html>

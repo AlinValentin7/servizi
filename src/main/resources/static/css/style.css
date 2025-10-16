@@ -193,7 +193,24 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 .lavoro-info h3 { color: var(--verde-primario); margin-bottom: 0.5rem; }
 
 /* Footer */
-footer { background-color: var(--verde-primario); color: var(--bianco); text-align: center; padding: 2rem; margin-top: 4rem; }
+footer { background-color: var(--verde-primario); color: var(--bianco); text-align: center; padding: 2rem; margin-top: 4rem; position: relative; }
+
+/* Firma discreta */
+.firma-discreta {
+    font-size: 0.65rem;
+    opacity: 0.3;
+    color: var(--beige-scuro);
+    position: absolute;
+    bottom: 0.3rem;
+    right: 1rem;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
+    transition: opacity 0.3s ease;
+}
+
+.firma-discreta:hover {
+    opacity: 0.7;
+}
 
 .footer-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; }
 
@@ -206,3 +223,181 @@ footer { background-color: var(--verde-primario); color: var(--bianco); text-ali
 /* Animazioni di rivelazione */
 [data-animate] { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
 .in-view { opacity: 1 !important; transform: translateY(0) !important; }
+
+/* ========== DISABILITA ANIMAZIONI NELLE PAGINE ADMIN ========== */
+/* Forza tutti gli elementi ad essere visibili senza animazioni nelle pagine admin */
+body[class*="admin"] [data-animate],
+body[class*="admin"] *,
+.admin-page [data-animate],
+.admin-page * {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+/* Mantieni solo le transizioni essenziali per i controlli interattivi */
+body[class*="admin"] .btn,
+body[class*="admin"] a,
+body[class*="admin"] .form-control,
+.admin-page .btn,
+.admin-page a,
+.admin-page .form-control {
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* Disabilita hover animations sulle card e table rows nelle pagine admin */
+body[class*="admin"] .card,
+body[class*="admin"] .feature,
+body[class*="admin"] .lavoro-card,
+.admin-page .card,
+.admin-page .feature,
+.admin-page .lavoro-card {
+    transform: none !important;
+    transition: box-shadow 0.2s ease !important;
+}
+
+/* ========== FIX MODALI - ANTI FLICKERING ========== */
+/* Disabilita completamente animazioni nei modali */
+.modal, .modal * { 
+    opacity: 1 !important; 
+    transform: none !important; 
+    transition: none !important;
+    animation: none !important;
+}
+
+/* Textarea nei modali - nessuna animazione */
+.modal textarea,
+.modal-textarea-no-animate {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+
+.modal-dialog {
+    transition: transform 0.3s ease-out !important;
+}
+
+/* Layout migliorato per modal footer - pulsanti dentro il riquadro */
+.modal-footer { 
+    display: flex !important; 
+    flex-wrap: nowrap !important; 
+    gap: 0.5rem !important; 
+    justify-content: flex-end !important; 
+    padding: 1rem !important;
+    align-items: center !important;
+}
+
+.modal-footer .btn { 
+    margin: 0 !important; 
+    padding: 0.5rem 1rem !important;
+    white-space: nowrap !important; 
+    flex-shrink: 1 !important;
+    min-width: auto !important;
+}
+
+/* ========== RESPONSIVE ADMIN PAGES ========== */
+/* Tabelle responsive */
+@media (max-width: 992px) {
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .table {
+        min-width: 800px;
+    }
+    
+    .container {
+        padding: 0 1rem;
+    }
+}
+
+/* Mobile - schermi piccoli */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+    }
+    
+    .nav-links a {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .card {
+        padding: 1rem;
+    }
+    
+    .card-header {
+        margin: -1rem -1rem 1rem -1rem;
+        padding: 0.75rem 1rem;
+    }
+    
+    .btn-group {
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+    
+    .btn-group .btn,
+    .btn-group form,
+    .btn-group select {
+        width: 100% !important;
+        margin: 0.25rem 0 !important;
+    }
+    
+    .modal-dialog {
+        margin: 0.5rem;
+        max-width: calc(100% - 1rem);
+    }
+    
+    .modal-footer {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+    
+    .modal-footer .btn {
+        width: 100% !important;
+        flex: 1 1 auto !important;
+    }
+}
+
+/* Smartphone piccoli */
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .table {
+        font-size: 0.85rem;
+    }
+    
+    .table td, .table th {
+        padding: 0.5rem 0.25rem;
+    }
+    
+    .badge {
+        font-size: 0.7rem;
+    }
+    
+    .btn-sm {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+}

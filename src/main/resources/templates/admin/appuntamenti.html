@@ -11,7 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
+<body class="admin-page">
     <header>
         <nav>
             <div class="logo">
@@ -43,6 +43,7 @@
                 <h2><i class="bi bi-calendar-check me-2"></i>Gestione Appuntamenti</h2>
             </div>
 
+            <div class="table-responsive">
             <table class="table align-middle">
                 <thead>
                     <tr>
@@ -90,15 +91,21 @@
                                     <i class="bi bi-x-circle me-1"></i>Rifiuta
                                 </button>
                                 
-                                <!-- Dropdown cambio stato -->
-                                <form th:action="@{/admin/appuntamenti/{id}/stato(id=${app.id})}" method="post" style="display: inline;">
-                                    <select name="stato" onchange="this.form.submit()" class="form-select form-select-sm" style="width: auto; display: inline-block;">
-                                        <option value="IN_ATTESA" th:selected="${app.stato.name() == 'IN_ATTESA'}">In Attesa</option>
-                                        <option value="CONFERMATO" th:selected="${app.stato.name() == 'CONFERMATO'}">Confermato</option>
-                                        <option value="COMPLETATO" th:selected="${app.stato.name() == 'COMPLETATO'}">Completato</option>
-                                        <option value="ANNULLATO" th:selected="${app.stato.name() == 'ANNULLATO'}">Annullato</option>
-                                    </select>
+                                <!-- Pulsante Completa (solo se CONFERMATO) -->
+                                <form th:if="${app.stato.name() == 'CONFERMATO'}" th:action="@{/admin/appuntamenti/{id}/stato(id=${app.id})}" method="post" style="display: inline;" onsubmit="return confirm('Segnare questo appuntamento come completato?')">
+                                    <input type="hidden" name="stato" value="COMPLETATO">
+                                    <button type="submit" class="btn btn-sm btn-primary me-1" title="Segna come completato">
+                                        <i class="bi bi-check-all me-1"></i>Completa
+                                    </button>
                                 </form>
+                                
+                                <!-- Pulsante Visualizza Dettagli (per CONFERMATO, COMPLETATO e ANNULLATO) -->
+                                <a th:if="${app.stato.name() != 'IN_ATTESA'}" 
+                                   th:href="@{/admin/appuntamenti/{id}/dettaglio(id=${app.id})}" 
+                                   class="btn btn-sm btn-info me-1" 
+                                   title="Visualizza dettagli">
+                                    <i class="bi bi-eye"></i>
+                                </a>
                                 
                                 <!-- Pulsante Elimina -->
                                 <form th:action="@{/admin/appuntamenti/{id}/elimina(id=${app.id})}" method="post" style="display: inline;" onsubmit="return confirm('Sei sicuro di voler eliminare questo appuntamento?')">
@@ -107,12 +114,12 @@
                             </div>
                             
                             <!-- Modale Rifiuta Appuntamento -->
-                            <div class="modal fade" th:id="'modalRifiuta' + ${app.id}" tabindex="-1">
-                                <div class="modal-dialog">
+                            <div class="modal fade" th:id="'modalRifiuta' + ${app.id}" tabindex="-1" aria-labelledby="modalRifiutaLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header bg-danger text-white">
-                                            <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2"></i>Rifiuta Appuntamento</h5>
-                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                            <h5 class="modal-title" th:id="'modalRifiutaLabel' + ${app.id}"><i class="bi bi-exclamation-triangle me-2"></i>Rifiuta Appuntamento</h5>
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <form th:action="@{/admin/appuntamenti/{id}/rifiuta(id=${app.id})}" method="post">
                                             <div class="modal-body">
@@ -120,15 +127,19 @@
                                                 <p><strong>Data/Ora:</strong> <span th:text="${#temporals.format(app.dataAppuntamento, 'dd/MM/yyyy HH:mm')}"></span></p>
                                                 <hr>
                                                 <div class="mb-3">
-                                                    <label for="motivazione" class="form-label">Motivazione del rifiuto *</label>
-                                                    <textarea class="form-control" id="motivazione" name="motivazione" rows="4" required 
+                                                    <label th:for="'motivazione' + ${app.id}" class="form-label">Motivazione del rifiuto *</label>
+                                                    <textarea class="form-control modal-textarea-no-animate" 
+                                                              th:id="'motivazione' + ${app.id}" 
+                                                              name="motivazione" 
+                                                              rows="4" 
+                                                              required 
                                                               placeholder="Inserisci il motivo per cui non sei disponibile (es: 'Siamo già impegnati in quella fascia oraria', 'Ferie aziendali', ecc.)"></textarea>
                                                     <small class="text-muted">Questa motivazione verrà inviata al cliente via email.</small>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                                                <button type="submit" class="btn btn-danger"><i class="bi bi-send me-2"></i>Rifiuta e Invia Email</button>
+                                            <div class="modal-footer flex-nowrap gap-2">
+                                                <button type="button" class="btn btn-secondary flex-fill" data-bs-dismiss="modal">Annulla</button>
+                                                <button type="submit" class="btn btn-danger flex-fill"><i class="bi bi-send me-1"></i>Rifiuta e Invia Email</button>
                                             </div>
                                         </form>
                                     </div>
@@ -138,6 +149,7 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <div th:if="${appuntamenti.isEmpty()}" class="text-center py-4">
                 <p>Nessun appuntamento presente.</p>
@@ -147,9 +159,23 @@
 
     <footer>
         <p style="text-align: center; padding: 1rem;">&copy; 2025 Servizi Edili Elvis SRL</p>
+        <span class="firma-discreta">Firmato $₿420</span>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script th:src="@{/js/main.js}"></script>
+    <style>
+        /* Fix anti-flickering per modali - forza visibilità immediata */
+        .modal *, .modal textarea, .modal-body *, .modal-footer * {
+            opacity: 1 !important;
+            transform: none !important;
+            animation: none !important;
+        }
+        
+        /* Mantieni solo le transizioni necessarie per i controlli del form */
+        .modal textarea, .modal input, .modal select {
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+        }
+    </style>
 </body>
 </html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettaglio Appuntamento - Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="admin-page">
+    <header>
+        <nav>
+            <div class="logo">
+                <span class="logo-icon"><i class="bi bi-buildings"></i></span>
+                Admin - Servizi Edili Elvis SRL
+            </div>
+            <div class="nav-links">
+                <a href="/admin/appuntamenti">Appuntamenti</a>
+                <a href="/admin/contatti">Contatti</a>
+                <a href="/admin/lavori">Lavori</a>
+                <a href="/">Sito Pubblico</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="mb-3">
+            <a href="/admin/appuntamenti" class="btn btn-secondary">
+                <i class="bi bi-arrow-left me-2"></i>Torna agli Appuntamenti
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>
+                    <i class="bi bi-calendar-event me-2"></i>Dettaglio Appuntamento #<span th:text="${appuntamento.id}"></span>
+                </h2>
+            </div>
+
+            <div class="card-body">
+                <!-- Stato dell'appuntamento -->
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="alert" 
+                             th:classappend="${appuntamento.stato.name() == 'IN_ATTESA'} ? 'alert-warning' :
+                                           (${appuntamento.stato.name() == 'CONFERMATO'} ? 'alert-info' :
+                                           (${appuntamento.stato.name() == 'COMPLETATO'} ? 'alert-success' : 'alert-danger'))">
+                            <h4 class="alert-heading">
+                                <i class="bi" 
+                                   th:classappend="${appuntamento.stato.name() == 'IN_ATTESA'} ? 'bi-clock' :
+                                                  (${appuntamento.stato.name() == 'CONFERMATO'} ? 'bi-check-circle' :
+                                                  (${appuntamento.stato.name() == 'COMPLETATO'} ? 'bi-check-all' : 'bi-x-circle'))"></i>
+                                Stato: <span th:text="${appuntamento.stato}"></span>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informazioni Cliente -->
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <h4 class="mb-3"><i class="bi bi-person-circle me-2"></i>Informazioni Cliente</h4>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th style="width: 30%;">Nome Completo</th>
+                                <td><strong th:text="${appuntamento.nomeCliente} + ' ' + ${appuntamento.cognomeCliente}"></strong></td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td><a th:href="'mailto:' + ${appuntamento.email}" th:text="${appuntamento.email}"></a></td>
+                            </tr>
+                            <tr>
+                                <th>Telefono</th>
+                                <td><a th:href="'tel:' + ${appuntamento.telefono}" th:text="${appuntamento.telefono}"></a></td>
+                            </tr>
+                            <tr th:if="${appuntamento.indirizzo != null && !appuntamento.indirizzo.isEmpty()}">
+                                <th>Indirizzo</th>
+                                <td th:text="${appuntamento.indirizzo}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Dettagli Appuntamento -->
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <h4 class="mb-3"><i class="bi bi-calendar-check me-2"></i>Dettagli Appuntamento</h4>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th style="width: 30%;">Data e Ora Appuntamento</th>
+                                <td>
+                                    <strong class="text-primary" style="font-size: 1.1rem;">
+                                        <i class="bi bi-calendar3 me-1"></i>
+                                        <span th:text="${#temporals.format(appuntamento.dataAppuntamento, 'dd/MM/yyyy')}"></span>
+                                        <i class="bi bi-clock ms-3 me-1"></i>
+                                        <span th:text="${#temporals.format(appuntamento.dataAppuntamento, 'HH:mm')}"></span>
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Tipo di Servizio</th>
+                                <td><span class="badge bg-primary" style="font-size: 1rem;" th:text="${appuntamento.tipoServizio}"></span></td>
+                            </tr>
+                            <tr th:if="${appuntamento.descrizione != null && !appuntamento.descrizione.isEmpty()}">
+                                <th>Descrizione</th>
+                                <td th:text="${appuntamento.descrizione}"></td>
+                            </tr>
+                            <tr>
+                                <th>Data Creazione</th>
+                                <td th:text="${#temporals.format(appuntamento.dataCreazione, 'dd/MM/yyyy HH:mm')}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Dettagli Annullamento (solo se annullato) -->
+                <div class="row mb-4" th:if="${appuntamento.stato.name() == 'ANNULLATO'}">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger">
+                            <h4 class="alert-heading">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>Dettagli Annullamento
+                            </h4>
+                            <hr>
+                            <table class="table table-sm mb-0">
+                                <tr th:if="${appuntamento.dataAnnullamento != null}">
+                                    <th style="width: 30%; border-top: none;">Data e Ora Annullamento</th>
+                                    <td style="border-top: none;">
+                                        <strong th:text="${#temporals.format(appuntamento.dataAnnullamento, 'dd/MM/yyyy HH:mm')}"></strong>
+                                    </td>
+                                </tr>
+                                <tr th:if="${appuntamento.motivazioneRifiuto != null && !appuntamento.motivazioneRifiuto.isEmpty()}">
+                                    <th style="width: 30%;">Motivazione del Rifiuto</th>
+                                    <td>
+                                        <div class="p-3 bg-white rounded border">
+                                            <p class="mb-0" style="white-space: pre-wrap;" th:text="${appuntamento.motivazioneRifiuto}"></p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Azioni -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex gap-2 justify-content-end">
+                            <a href="/admin/appuntamenti" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left me-1"></i>Torna Indietro
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p style="text-align: center; padding: 1rem;">&copy; 2025 Servizi Edili Elvis SRL</p>
+        <span class="firma-discreta">Firmato $₿420</span>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

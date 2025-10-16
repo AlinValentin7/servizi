@@ -39,6 +39,13 @@ public class AppuntamentoController {
             return "prenota";
         }
         
+        // Validazione orario di lavoro: 8:00 - 20:00
+        int ora = appuntamento.getDataAppuntamento().getHour();
+        if (ora < 8 || ora >= 20) {
+            model.addAttribute("error", "⚠️ ORARIO NON DISPONIBILE - Gli appuntamenti sono possibili solo dalle 8:00 alle 20:00. Per favore, scegli un orario all'interno della nostra fascia lavorativa.");
+            return "prenota";
+        }
+        
         try {
             Appuntamento saved = appuntamentoService.creaAppuntamento(appuntamento);
             model.addAttribute("whatsappLink", whatsAppService.generaLinkWhatsApp(saved));

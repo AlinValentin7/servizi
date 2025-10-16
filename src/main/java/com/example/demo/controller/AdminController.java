@@ -196,6 +196,19 @@ public class AdminController {
         }
         return "redirect:/admin/appuntamenti";
     }
+    
+    @GetMapping("/appuntamenti/{id}/dettaglio")
+    public String dettaglioAppuntamento(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            Appuntamento appuntamento = appuntamentoService.getAppuntamentoById(id)
+                .orElseThrow(() -> new RuntimeException("Appuntamento non trovato"));
+            model.addAttribute("appuntamento", appuntamento);
+            return "admin/dettaglio-appuntamento";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Appuntamento non trovato");
+            return "redirect:/admin/appuntamenti";
+        }
+    }
 
     // Gestione Contatti
     @GetMapping("/contatti")

@@ -18,13 +18,27 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // Reveal on scroll
+  // Reveal on scroll (escludi elementi nei modali per evitare conflitti)
   const revealEls = document.querySelectorAll('[data-animate]');
   if (revealEls.length) {
     const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+      entries.forEach(e => { 
+        // Non applicare animazioni se l'elemento è dentro un modale o è una pagina admin
+        const isInModal = e.target.closest('.modal');
+        const isAdminPage = window.location.pathname.includes('/admin');
+        if (!isInModal && !isAdminPage && e.isIntersecting) {
+          e.target.classList.add('in-view'); 
+        }
+      });
     }, { threshold: 0.15 });
-    revealEls.forEach(el => io.observe(el));
+    revealEls.forEach(el => {
+      // Osserva solo se non è dentro un modale e non siamo in una pagina admin
+      const isInModal = el.closest('.modal');
+      const isAdminPage = window.location.pathname.includes('/admin');
+      if (!isInModal && !isAdminPage) {
+        io.observe(el);
+      }
+    });
   }
 
   // Counters

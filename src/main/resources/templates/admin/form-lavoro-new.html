@@ -19,7 +19,7 @@
         .form-actions { display: flex; gap: 1rem; margin-top: 2rem; }
     </style>
 </head>
-<body>
+<body class="admin-page">
     <div class="admin-header" style="background-color: var(--verde-primario); color: white; padding: 1rem 2rem; display:flex; align-items:center; justify-content:space-between;">
         <h1><i class="bi bi-bricks me-2"></i><span th:text="${lavoro.id != null ? 'Modifica Lavoro' : 'Nuovo Lavoro'}">Form Lavoro</span></h1>
         <div class="admin-nav" style="display:flex; gap:1rem;">
