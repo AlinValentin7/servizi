@@ -9,17 +9,55 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Service per l'invio di email ai clienti.
+ * 
+ * Questo servizio centralizza tutta la logica di invio email dell'applicazione:
+ * - Email di conferma ricezione appuntamento (automatica dopo prenotazione)
+ * - Email di conferma definitiva appuntamento (dall'admin)
+ * - Email di rifiuto/indisponibilità appuntamento
+ * - Email di risposta ai messaggi di contatto
+ * 
+ * CONFIGURAZIONE RICHIESTA:
+ * Nel file application.properties devono essere configurati:
+ * - spring.mail.host (es: smtp.gmail.com)
+ * - spring.mail.port (es: 587)
+ * - spring.mail.username (email mittente)
+ * - spring.mail.password (password o app password)
+ * 
+ * @author Firmato $₿420
+ * @since 2025
+ */
 @Service
 public class EmailService {
     
+    // JavaMailSender fornito da Spring Boot per invio email SMTP
     @Autowired
     private JavaMailSender mailSender;
     
+    // Email mittente configurata in application.properties
     @Value("${spring.mail.username}")
     private String fromEmail;
     
+    // Formatter per date in formato italiano leggibile (es: "16/10/2025 alle ore 14:30")
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy 'alle ore' HH:mm");
     
+    /**
+     * Invia email automatica di conferma ricezione appuntamento al cliente.
+     * 
+     * Questa email viene inviata IMMEDIATAMENTE dopo che il cliente ha compilato
+     * il form di prenotazione sul sito. È una conferma di "abbiamo ricevuto la tua richiesta".
+     * 
+     * ATTENZIONE: Questo NON è l'appuntamento definitivo confermato!
+     * L'admin dovrà poi confermare o rifiutare l'appuntamento manualmente.
+     * 
+     * CONTENUTO EMAIL:
+     * - Ringraziamento per la prenotazione
+     * - Riepilogo dati appuntamento richiesto
+     * - Avviso che verrà contattato per conferma definitiva
+     * 
+     * @param appuntamento L'appuntamento appena creato dal cliente
+     */
     public void inviaEmailConfermaAppuntamento(Appuntamento appuntamento) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromEmail);
@@ -41,6 +79,20 @@ public class EmailService {
         mailSender.send(message);
     }
     
+    /**
+     * Invia email di risposta a un messaggio di contatto.
+     * 
+     * Utilizzato quando l'admin risponde a un cliente che ha compilato
+     * il form "Contatti" sul sito pubblico.
+     * 
+     * CONTENUTO EMAIL:
+     * - Intestazione personalizzata con nome cliente
+     * - Testo della risposta scritta dall'admin
+     * - Firma aziendale
+     * 
+     * @param contatto Il contatto originale del cliente
+     * @param risposta Il testo della risposta scritta dall'amministratore
+     */
     public void inviaEmailRisposta(Contatto contatto, String risposta) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromEmail);
@@ -57,7 +109,24 @@ public class EmailService {
     }
     
     /**
-     * Invia email di conferma appuntamento dall'admin al cliente
+     * Invia email di CONFERMA DEFINITIVA appuntamento dall'admin al cliente.
+     * 
+     * Questa email viene inviata quando l'admin clicca "Conferma" su un appuntamento IN_ATTESA.
+     * È la conferma UFFICIALE che l'appuntamento è confermato e il team si presenterà.
+     * 
+     * DIFFERENZA con inviaEmailConfermaAppuntamento():
+     * - inviaEmailConfermaAppuntamento() = "abbiamo ricevuto la tua richiesta"
+     * - inviaEmailConfermaAppuntamentoDaAdmin() = "CONFERMATO! Ci saremo sicuramente"
+     * 
+     * CONTENUTO EMAIL:
+     * - Oggetto con emoji ✅ per attirare attenzione
+     * - Conferma ufficiale dell'appuntamento
+     * - Data/ora formattate in italiano (16/10/2025 alle ore 14:30)
+     * - Riquadro con tutti i dettagli dell'appuntamento
+     * - Contatti aziendali per necessità
+     * - Promemoria durata appuntamento (1 ora)
+     * 
+     * @param appuntamento L'appuntamento confermato dall'admin
      */
     public void inviaEmailConfermaAppuntamentoDaAdmin(Appuntamento appuntamento) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -90,7 +159,30 @@ public class EmailService {
     }
     
     /**
-     * Invia email di rifiuto/indisponibilità per l'appuntamento richiesto
+     * Invia email di RIFIUTO/INDISPONIBILITÀ per l'appuntamento richiesto.
+     * 
+     * Questa email viene inviata quando l'admin clicca "Rifiuta" su un appuntamento IN_ATTESA
+     * e inserisce una motivazione del rifiuto.
+     * 
+     * SCOPO DELL'EMAIL:
+     * - Informare il cliente che NON siamo disponibili nella fascia oraria richiesta
+     * - Spiegare il MOTIVO del rifiuto (motivazione scritta dall'admin)
+     * - Invitare il cliente a riprogrammare scegliendo un'altra data
+     * - Fornire tutti i contatti per assistenza nella riprogrammazione
+     * 
+     * CONTENUTO EMAIL:
+     * - Oggetto con emoji ⚠️ per segnalare problema
+     * - Ringraziamento e scuse per l'inconveniente
+     * - Riepilogo dell'appuntamento richiesto (per riferimento)
+     * - MOTIVAZIONE del rifiuto (es: "Siamo già impegnati in quella fascia")
+     * - Link diretto alla pagina prenotazioni per riprogrammare
+     * - Contatti multipli (telefono, email, WhatsApp) per assistenza
+     * 
+     * TONO: Professionale ma cordiale, con scuse per l'inconveniente.
+     * L'obiettivo è far riprogrammare il cliente, non perderlo.
+     * 
+     * @param appuntamento L'appuntamento rifiutato
+     * @param motivazione La motivazione del rifiuto inserita dall'admin
      */
     public void inviaEmailRifiutoAppuntamento(Appuntamento appuntamento, String motivazione) {
         SimpleMailMessage message = new SimpleMailMessage();
