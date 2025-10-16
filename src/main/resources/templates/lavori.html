@@ -36,11 +36,11 @@
             <div class="lavoro-card" th:each="lavoro : ${lavori}">
                 <div class="lavoro-images">
                     <div style="position: relative; width: 50%;">
-                        <img th:src="${lavoro.fotoPrima.isEmpty() ? '/images/placeholder.jpg' : lavoro.fotoPrima[0]}" alt="Prima">
+                        <img th:src="${lavoro.fotoPrima.isEmpty() ? 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop' : lavoro.fotoPrima[0]}" alt="Prima">
                         <span class="before-label">PRIMA</span>
                     </div>
                     <div style="position: relative; width: 50%;">
-                        <img th:src="${lavoro.fotoDopo.isEmpty() ? '/images/placeholder.jpg' : lavoro.fotoDopo[0]}" alt="Dopo">
+                        <img th:src="${lavoro.fotoDopo.isEmpty() ? 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&h=400&fit=crop' : lavoro.fotoDopo[0]}" alt="Dopo">
                         <span class="after-label">DOPO</span>
                     </div>
                 </div>
