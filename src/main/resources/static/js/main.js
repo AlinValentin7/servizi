@@ -3,11 +3,12 @@
   const header = document.querySelector('header');
   const scrollTopBtn = document.createElement('div');
   scrollTopBtn.className = 'scrolltop';
-  scrollTopBtn.innerHTML = '↑';
+  // Use Bootstrap Icons instead of emoji
+  scrollTopBtn.innerHTML = '<i class="bi bi-arrow-up"></i>';
   document.body.appendChild(scrollTopBtn);
 
   const onScroll = () => {
-    if (!header.classList.contains('sticky')) header.classList.add('sticky');
+    if (header && !header.classList.contains('sticky')) header.classList.add('sticky');
     const y = window.scrollY || document.documentElement.scrollTop;
     if (y > 240) scrollTopBtn.classList.add('show'); else scrollTopBtn.classList.remove('show');
   };
@@ -53,20 +54,21 @@
     const prev = carousel.querySelector('[data-prev]');
     const next = carousel.querySelector('[data-next]');
     let index = 0;
-    const update = () => { track.style.transform = `translateX(-${index * 100}%)`; };
+    const update = () => { if (track) track.style.transform = `translateX(-${index * 100}%)`; };
     if (next) next.addEventListener('click', () => { index = (index + 1) % items.length; update(); });
     if (prev) prev.addEventListener('click', () => { index = (index - 1 + items.length) % items.length; update(); });
     // auto-play
-    setInterval(() => { index = (index + 1) % items.length; update(); }, 5000);
+    if (items.length > 1) setInterval(() => { index = (index + 1) % items.length; update(); }, 5000);
   });
 
-  // Inject floating WhatsApp button if not present
-  if (!document.querySelector('.floating-whatsapp')) {
+  // Inject floating WhatsApp button on public pages only (not /admin)
+  const isAdmin = window.location && typeof window.location.pathname === 'string' && window.location.pathname.startsWith('/admin');
+  if (!isAdmin && !document.querySelector('.floating-whatsapp')) {
     const wa = document.createElement('a');
     wa.href = 'https://wa.me/393801590128';
     wa.className = 'floating-whatsapp';
     wa.title = 'Chatta su WhatsApp';
-    wa.innerHTML = '💬';
+    wa.innerHTML = '<i class="bi bi-whatsapp"></i>';
     wa.setAttribute('aria-label', 'Apri WhatsApp');
     document.body.appendChild(wa);
   }

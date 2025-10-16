@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.model.Contatto;
 import com.example.demo.repository.ContattoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.Optional;
 
 @Service
 public class ContattoService {
+    
+    private static final Logger logger = LoggerFactory.getLogger(ContattoService.class);
     
     @Autowired
     private ContattoRepository contattoRepository;
@@ -47,8 +51,9 @@ public class ContattoService {
         if (contatto.isPresent()) {
             try {
                 emailService.inviaEmailRisposta(contatto.get(), risposta);
+                logger.info("Email di risposta inviata con successo al contatto ID: {}", id);
             } catch (Exception e) {
-                System.out.println("Avviso: Impossibile inviare email di risposta. " + e.getMessage());
+                logger.warn("Impossibile inviare email di risposta al contatto ID: {}. Errore: {}", id, e.getMessage());
             }
             segnaComeLetto(id);
         }

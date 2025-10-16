@@ -4,13 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servizi Edili Elvis SRL - Home</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <header>
         <nav>
             <div class="logo">
-                <span class="logo-icon">🏗️</span>
+                <span class="logo-icon"><i class="bi bi-buildings"></i></span>
                 Servizi Edili Elvis SRL
             </div>
             <div class="nav-links">
@@ -18,7 +26,7 @@
                 <a href="/prenota">Prenota Appuntamento</a>
                 <a href="/lavori">I Nostri Lavori</a>
                 <a href="/contatti">Contatti</a>
-                <a href="/admin/login" style="color: #ffd700;" title="Area Admin">🔐</a>
+                <a href="/admin/login" style="color: #ffd700;" title="Area Admin"><i class="bi bi-shield-lock"></i></a>
             </div>
         </nav>
     </header>
@@ -39,8 +47,8 @@
                 <div class="carousel-item" style="background-image: url('/images/hero3.jpg');"></div>
             </div>
             <div class="carousel-controls">
-                <button class="carousel-button" data-prev>‹</button>
-                <button class="carousel-button" data-next>›</button>
+                <button class="carousel-button" data-prev><i class="bi bi-chevron-left"></i></button>
+                <button class="carousel-button" data-next><i class="bi bi-chevron-right"></i></button>
             </div>
         </div>
     </div>
@@ -50,32 +58,32 @@
         
         <div class="grid">
             <div class="card" data-animate>
-                <h3 style="color: var(--verde-primario);">🏠 Ristrutturazioni</h3>
+                <h3 style="color: var(--verde-primario);"><i class="bi bi-house-gear me-2"></i>Ristrutturazioni</h3>
                 <p>Ristrutturiamo case, appartamenti e uffici con materiali di alta qualità e personale specializzato.</p>
             </div>
             
             <div class="card" data-animate>
-                <h3 style="color: var(--verde-primario);">🎨 Imbiancatura</h3>
+                <h3 style="color: var(--verde-primario);"><i class="bi bi-palette me-2"></i>Imbiancatura</h3>
                 <p>Servizi di imbiancatura professionale per interni ed esterni con finiture impeccabili.</p>
             </div>
             
             <div class="card" data-animate>
-                <h3 style="color: var(--verde-primario);">🔨 Muratura</h3>
+                <h3 style="color: var(--verde-primario);"><i class="bi bi-bricks me-2"></i>Muratura</h3>
                 <p>Lavori di muratura, costruzione muri divisori e opere in cemento armato.</p>
             </div>
             
             <div class="card" data-animate>
-                <h3 style="color: var(--verde-primario);">⚡ Impianti</h3>
+                <h3 style="color: var(--verde-primario);"><i class="bi bi-lightning-charge me-2"></i>Impianti</h3>
                 <p>Installazione e manutenzione impianti elettrici, idraulici e termici.</p>
             </div>
             
             <div class="card" data-animate>
-                <h3 style="color: var(--verde-primario);">🪟 Infissi</h3>
+                <h3 style="color: var(--verde-primario);"><i class="bi bi-window me-2"></i>Infissi</h3>
                 <p>Installazione porte, finestre e infissi di ultima generazione.</p>
             </div>
             
             <div class="card" data-animate>
-                <h3 style="color: var(--verde-primario);">🏗️ Pavimentazione</h3>
+                <h3 style="color: var(--verde-primario);"><i class="bi bi-grid-1x2 me-2"></i>Pavimentazione</h3>
                 <p>Posa di pavimenti in ceramica, parquet, resina e rivestimenti.</p>
             </div>
         </div>
@@ -107,14 +115,58 @@
         <div style="text-align: center; margin: 3rem 0;" data-animate>
             <h2 style="color: var(--verde-primario); margin-bottom: 1rem;">Perché Scegliere Noi?</h2>
             <div class="card">
-                <ul style="list-style: none; padding: 0;">
-                    <li style="padding: 1rem; border-bottom: 1px solid var(--beige-scuro);">✅ Oltre 25 anni di esperienza nel settore</li>
-                    <li style="padding: 1rem; border-bottom: 1px solid var(--beige-scuro);">✅ Personale qualificato e certificato</li>
-                    <li style="padding: 1rem; border-bottom: 1px solid var(--beige-scuro);">✅ Materiali di prima qualità</li>
-                    <li style="padding: 1rem; border-bottom: 1px solid var(--beige-scuro);">✅ Preventivi gratuiti e trasparenti</li>
-                    <li style="padding: 1rem; border-bottom: 1px solid var(--beige-scuro);">✅ Assistenza post-vendita</li>
-                    <li style="padding: 1rem;">✅ Rispetto dei tempi e del budget concordato</li>
+                <ul class="list-unstyled mb-0">
+                    <li class="py-2 border-bottom" style="border-color: var(--beige-scuro) !important;"><i class="bi bi-check2-circle text-success me-2"></i> Oltre 25 anni di esperienza nel settore</li>
+                    <li class="py-2 border-bottom" style="border-color: var(--beige-scuro) !important;"><i class="bi bi-check2-circle text-success me-2"></i> Personale qualificato e certificato</li>
+                    <li class="py-2 border-bottom" style="border-color: var(--beige-scuro) !important;"><i class="bi bi-check2-circle text-success me-2"></i> Materiali di prima qualità</li>
+                    <li class="py-2 border-bottom" style="border-color: var(--beige-scuro) !important;"><i class="bi bi-check2-circle text-success me-2"></i> Preventivi gratuiti e trasparenti</li>
+                    <li class="py-2 border-bottom" style="border-color: var(--beige-scuro) !important;"><i class="bi bi-check2-circle text-success me-2"></i> Assistenza post-vendita</li>
+                    <li class="py-2"><i class="bi bi-check2-circle text-success me-2"></i> Rispetto dei tempi e del budget concordato</li>
                 </ul>
+            </div>
+        </div>
+
+        <!-- FAQ accordion (Bootstrap) -->
+        <div class="row justify-content-center" data-animate>
+            <div class="col-lg-10">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="h1">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1" aria-expanded="true" aria-controls="c1">
+                                Qualità premium a prezzi competitivi
+                            </button>
+                        </h2>
+                        <div id="c1" class="accordion-collapse collapse show" aria-labelledby="h1" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Offriamo materiali selezionati e maestranze qualificate con un occhio al budget: proponiamo sempre alternative che massimizzano qualità e convenienza.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="h2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2" aria-expanded="false" aria-controls="c2">
+                                Tempistiche chiare e rispetto delle scadenze
+                            </button>
+                        </h2>
+                        <div id="c2" class="accordion-collapse collapse" aria-labelledby="h2" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Pianifichiamo il cantiere nei dettagli, comunichiamo gli step e rispettiamo i tempi concordati: niente sorprese.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="h3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3" aria-expanded="false" aria-controls="c3">
+                                Assistenza dedicata dal preventivo al post-lavoro
+                            </button>
+                        </h2>
+                        <div id="c3" class="accordion-collapse collapse" aria-labelledby="h3" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Un referente unico ti segue dall'analisi iniziale alla consegna: restiamo disponibili anche dopo la chiusura lavori.
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -130,19 +182,21 @@
         <div class="footer-content">
             <div class="footer-info">
                 <h3>Servizi Edili Elvis SRL</h3>
-                <p>📍 Via Roma, 123 - 00100 Roma</p>
-                <p>📞 Tel: +39 3801590128</p>
-                <p>📧 Email: trandafiralinvalentin@gmail.com</p>
+                <p><i class="bi bi-geo-alt me-2"></i> Via Roma, 123 - 00100 Roma</p>
+                <p><i class="bi bi-telephone me-2"></i> Tel: +39 3801590128</p>
+                <p><i class="bi bi-envelope me-2"></i> Email: trandafiralinvalentin@gmail.com</p>
             </div>
             <div class="social-links">
-                <a href="#" title="Facebook">📘</a>
-                <a href="#" title="Instagram">📷</a>
-                <a href="#" title="WhatsApp">💬</a>
+                <a href="#" title="Facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" title="Instagram"><i class="bi bi-instagram"></i></a>
+                <a href="#" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
             </div>
         </div>
         <p style="margin-top: 1rem;">&copy; 2025 Servizi Edili Elvis SRL - P.IVA 12345678901</p>
     </footer>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script th:src="@{/js/main.js}"></script>
 </body>
 </html>

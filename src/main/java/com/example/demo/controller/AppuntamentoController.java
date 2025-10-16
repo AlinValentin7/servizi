@@ -39,23 +39,17 @@ public class AppuntamentoController {
             return "prenota";
         }
         
-        Appuntamento saved = appuntamentoService.creaAppuntamento(appuntamento);
-        model.addAttribute("whatsappLink", whatsAppService.generaLinkWhatsApp(saved));
-        model.addAttribute("success", true);
-        
-        return "conferma-appuntamento";
-    }
-    
-    @PostMapping("/admin/appuntamenti/{id}/stato")
-    public String aggiornaStato(@PathVariable Long id, 
-                                @RequestParam Appuntamento.StatoAppuntamento stato) {
-        appuntamentoService.aggiornaStato(id, stato);
-        return "redirect:/admin/appuntamenti";
-    }
-    
-    @PostMapping("/admin/appuntamenti/{id}/elimina")
-    public String eliminaAppuntamento(@PathVariable Long id) {
-        appuntamentoService.eliminaAppuntamento(id);
-        return "redirect:/admin/appuntamenti";
+        try {
+            Appuntamento saved = appuntamentoService.creaAppuntamento(appuntamento);
+            model.addAttribute("whatsappLink", whatsAppService.generaLinkWhatsApp(saved));
+            model.addAttribute("success", true);
+            return "conferma-appuntamento";
+        } catch (IllegalStateException e) {
+            if ("FASCIA_ORARIA_NON_DISPONIBILE".equals(e.getMessage())) {
+                model.addAttribute("error", "⚠️ FASCIA ORARIA NON DISPONIBILE - La data e l'ora selezionate sono già occupate da un altro appuntamento. Ogni appuntamento dura circa 1 ora. Ti preghiamo di scegliere un'altra data o un altro orario.");
+                return "prenota";
+            }
+            throw e;
+        }
     }
 }

@@ -144,6 +144,58 @@ public class AdminController {
         model.addAttribute("appuntamenti", appuntamentoService.getAllAppuntamenti());
         return "admin/appuntamenti";
     }
+    
+    @PostMapping("/appuntamenti/{id}/stato")
+    public String aggiornaStatoAppuntamento(@PathVariable Long id, 
+                                           @RequestParam("stato") String stato,
+                                           RedirectAttributes redirectAttributes) {
+        try {
+            Appuntamento.StatoAppuntamento nuovoStato = Appuntamento.StatoAppuntamento.valueOf(stato);
+            appuntamentoService.aggiornaStato(id, nuovoStato);
+            redirectAttributes.addFlashAttribute("success", "Stato appuntamento aggiornato!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Errore nell'aggiornare lo stato");
+        }
+        return "redirect:/admin/appuntamenti";
+    }
+    
+    @PostMapping("/appuntamenti/{id}/conferma")
+    public String confermaAppuntamento(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            appuntamentoService.confermaAppuntamento(id);
+            redirectAttributes.addFlashAttribute("success", "✅ Appuntamento confermato! Email inviata al cliente.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Errore nella conferma: " + e.getMessage());
+        }
+        return "redirect:/admin/appuntamenti";
+    }
+    
+    @PostMapping("/appuntamenti/{id}/rifiuta")
+    public String rifiutaAppuntamento(@PathVariable Long id, 
+                                      @RequestParam("motivazione") String motivazione,
+                                      RedirectAttributes redirectAttributes) {
+        try {
+            if (motivazione == null || motivazione.trim().isEmpty()) {
+                motivazione = "Purtroppo non siamo disponibili in quella fascia oraria. Ti invitiamo a scegliere un'altra data.";
+            }
+            appuntamentoService.rifiutaAppuntamento(id, motivazione);
+            redirectAttributes.addFlashAttribute("success", "⚠️ Appuntamento rifiutato. Email di notifica inviata al cliente.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Errore nel rifiuto: " + e.getMessage());
+        }
+        return "redirect:/admin/appuntamenti";
+    }
+    
+    @PostMapping("/appuntamenti/{id}/elimina")
+    public String eliminaAppuntamento(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            appuntamentoService.eliminaAppuntamento(id);
+            redirectAttributes.addFlashAttribute("success", "Appuntamento eliminato!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Errore nell'eliminare l'appuntamento");
+        }
+        return "redirect:/admin/appuntamenti";
+    }
 
     // Gestione Contatti
     @GetMapping("/contatti")
