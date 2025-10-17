@@ -1,0 +1,153 @@
+/* ==============================================
+   LOADER PAGINA - Mattoncini Animati
+   ============================================== */
+
+/* Container principale del loader */
+#page-loader {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #0e3b2e, #145a32);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+#page-loader.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Contenuto del loader */
+.loader-content {
+    text-align: center;
+    color: #fff;
+}
+
+.loader-text {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #c5a059;
+    margin-top: 2rem;
+    letter-spacing: 1px;
+    animation: fadeInOut 2s ease-in-out infinite;
+}
+
+/* Animazione mattoncini che costruiscono */
+.brick-loader {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.brick {
+    width: 30px;
+    height: 20px;
+    background: linear-gradient(145deg, #c5a059, #d4af6a);
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    animation: buildBrick 1.5s ease-in-out infinite;
+    position: relative;
+}
+
+/* Effetto mattone 3D */
+.brick::before {
+    content: '';
+    position: absolute;
+    inset: 50% 0 0 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.brick::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 1px;
+}
+
+/* Ritardi progressivi per effetto onda */
+.brick:nth-child(1) { animation-delay: 0s; }
+.brick:nth-child(2) { animation-delay: 0.1s; }
+.brick:nth-child(3) { animation-delay: 0.2s; }
+.brick:nth-child(4) { animation-delay: 0.3s; }
+.brick:nth-child(5) { animation-delay: 0.4s; }
+.brick:nth-child(6) { animation-delay: 0.5s; }
+.brick:nth-child(7) { animation-delay: 0.6s; }
+.brick:nth-child(8) { animation-delay: 0.7s; }
+.brick:nth-child(9) { animation-delay: 0.8s; }
+
+/* Icona costruzione centrale */
+.construction-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.2);
+    animation: rotate 3s linear infinite;
+}
+
+/* ==============================================
+   ANIMAZIONI
+   ============================================== */
+
+@keyframes buildBrick {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    25% {
+        transform: translateY(-20px) scale(1.1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+@keyframes rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ==============================================
+   RESPONSIVE
+   ============================================== */
+
+@media (max-width: 768px) {
+    .loader-text {
+        font-size: 1.4rem;
+        padding: 0 1rem;
+    }
+    
+    .brick-loader {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .brick {
+        width: 25px;
+        height: 16px;
+    }
+}

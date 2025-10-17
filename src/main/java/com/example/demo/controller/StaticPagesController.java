@@ -39,4 +39,13 @@ public class StaticPagesController {
     public String terminiCondizioni() {
         return "termini-condizioni";
     }
+
+    /**
+     * Pagina Demo Animazioni e Componenti React-Like
+     * URL: /demo-animazioni
+     */
+    @GetMapping("/demo-animazioni")
+    public String demoAnimazioni() {
+        return "demo-animazioni";
+    }
 }

@@ -11,6 +11,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/cookies.css}">
+    <link rel="stylesheet" th:href="@{/css/animations.css}">
+    <link rel="stylesheet" th:href="@{/css/components.css}">
 </head>
 <body>
     <header>
@@ -30,11 +32,13 @@
     </header>
 
     <div class="container">
-        <h2 style="text-align: center; color: var(--verde-primario); margin: 2rem 0;"><i class="bi bi-camera-fill me-2"></i>I Nostri Lavori - Prima e Dopo</h2>
-        <p style="text-align: center; margin-bottom: 3rem;">Scopri i nostri progetti completati con successo. Ogni lavoro racconta la nostra dedizione alla qualità.</p>
+        <h2 class="gradient-text" data-animate="zoom" style="text-align: center; margin: 2rem 0;">
+            <i class="bi bi-camera-fill me-2 float-animation"></i>I Nostri Lavori - Prima e Dopo
+        </h2>
+        <p style="text-align: center; margin-bottom: 3rem;" data-animate="fade">Scopri i nostri progetti completati con successo. Ogni lavoro racconta la nostra dedizione alla qualità.</p>
 
-        <div class="lavori-grid">
-            <div class="lavoro-card" th:each="lavoro : ${lavori}">
+        <div class="lavori-grid stagger-animation">
+            <div class="lavoro-card card-hover-effect card-3d" data-animate="zoom" th:each="lavoro : ${lavori}">
                 <div class="lavoro-images">
                     <div style="position: relative; width: 50%;">
                         <img th:src="${lavoro.fotoPrima.isEmpty() ? 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop' : lavoro.fotoPrima[0]}" alt="Prima">
@@ -60,10 +64,12 @@
             <p style="font-size: 1.2rem; color: var(--verde-primario);">Nessun lavoro disponibile al momento.</p>
         </div>
 
-        <div style="background: var(--verde-primario); color: white; padding: 3rem; border-radius: 10px; text-align: center; margin: 3rem 0;">
-            <h2>Vuoi un lavoro come questi?</h2>
+        <div class="gradient-animation" data-animate="zoom" style="background: linear-gradient(135deg, var(--verde-primario), var(--verde-secondario)); color: white; padding: 3rem; border-radius: 10px; text-align: center; margin: 3rem 0;">
+            <h2 class="reveal-text">Vuoi un lavoro come questi?</h2>
             <p style="font-size: 1.2rem; margin: 1rem 0;">Prenota un appuntamento gratuito per un preventivo personalizzato!</p>
-            <a href="/prenota" class="btn" style="background-color: white; color: var(--verde-primario);">Prenota Ora</a>
+            <a href="/prenota" class="btn pulse-animation glow-effect btn-modern" style="background-color: white; color: var(--verde-primario);">
+                <i class="bi bi-calendar-check me-2"></i>Prenota Ora
+            </a>
         </div>
     </div>
 
@@ -86,8 +92,23 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/react-like.js}"></script>
     <script th:src="@{/js/navbar.js}"></script>
     <script th:src="@{/js/main.js}"></script>
     <script th:src="@{/js/cookies.js}"></script>
+    <script>
+        // Attiva animazioni reveal on scroll
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('in-view');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 </html>

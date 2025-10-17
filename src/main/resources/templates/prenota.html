@@ -11,8 +11,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/cookies.css}">
+    <link rel="stylesheet" th:href="@{/css/animations.css}">
+    <link rel="stylesheet" th:href="@{/css/components.css}">
 </head>
 <body>
+    <!-- Progress Bar per completamento form -->
+    <div class="progress-custom" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: 4px;">
+        <div id="form-progress-bar" class="progress-bar-custom" style="width: 0%"></div>
+    </div>
+    
     <header>
         <nav>
             <div class="logo">
@@ -30,22 +37,22 @@
     </header>
 
     <div class="container">
-        <div class="card">
+        <div class="card card-hover-effect" data-animate="zoom">
             <div class="card-header">
-                <h2><i class="bi bi-calendar-check me-2"></i>Prenota un Appuntamento</h2>
+                <h2 class="gradient-text"><i class="bi bi-calendar-check me-2 float-animation"></i>Prenota un Appuntamento</h2>
             </div>
 
             <!-- Alert errore fascia oraria non disponibile -->
-            <div th:if="${error}" class="alert alert-warning alert-dismissible fade show m-3" role="alert">
+            <div th:if="${error}" class="alert alert-warning alert-dismissible fade show m-3 shake-animation" role="alert">
                 <i class="bi bi-exclamation-triangle-fill me-2"></i>
                 <strong>Attenzione!</strong><br>
                 <span th:text="${error}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
 
-            <p style="text-align: center; margin-bottom: 2rem;">Compila il form per prenotare un appuntamento. Riceverai una conferma via email e potrai anche contattarci tramite WhatsApp.</p>
+            <p style="text-align: center; margin-bottom: 2rem;" data-animate="fade">Compila il form per prenotare un appuntamento. Riceverai una conferma via email e potrai anche contattarci tramite WhatsApp.</p>
 
-            <form th:action="@{/prenota}" th:object="${appuntamento}" method="post">
+            <form id="booking-form" th:action="@{/prenota}" th:object="${appuntamento}" method="post">
                 <div class="grid">
                     <div class="form-group">
                         <label for="nomeCliente">Nome *</label>
@@ -110,8 +117,10 @@
                 </div>
 
                 <div style="text-align: center; margin-top: 2rem;">
-                    <button type="submit" class="btn btn-primary"><i class="bi bi-calendar-check me-2"></i>Prenota Appuntamento</button>
-                    <a href="/" class="btn btn-secondary">Annulla</a>
+                    <button type="submit" class="btn btn-primary pulse-animation glow-effect btn-modern ripple-effect">
+                        <i class="bi bi-calendar-check me-2"></i>Prenota Appuntamento
+                    </button>
+                    <a href="/" class="btn btn-secondary smooth-color-transition">Annulla</a>
                 </div>
             </form>
         </div>
@@ -136,9 +145,70 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script th:src="@{/js/react-like.js}"></script>
+    <script th:src="@{/js/navbar.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/cookies.js}"></script>
     <script>
-        // Validazione orario di lavoro: 8:00 - 20:00
+        // Progress Bar per completamento form
         document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('booking-form');
+            const progressBar = document.getElementById('form-progress-bar');
+            const inputs = form.querySelectorAll('input[required], textarea[required], select[required]');
+            
+            function updateProgress() {
+                let filledFields = 0;
+                inputs.forEach(input => {
+                    if (input.value.trim() !== '') {
+                        filledFields++;
+                    }
+                });
+                
+                const progress = (filledFields / inputs.length) * 100;
+                progressBar.style.width = progress + '%';
+                
+                // Cambia colore in base al progresso
+                if (progress < 33) {
+                    progressBar.style.background = 'linear-gradient(90deg, #dc3545, #e74c3c)';
+                } else if (progress < 66) {
+                    progressBar.style.background = 'linear-gradient(90deg, #ffc107, #f39c12)';
+                } else if (progress < 100) {
+                    progressBar.style.background = 'linear-gradient(90deg, #17a2b8, #3498db)';
+                } else {
+                    progressBar.style.background = 'linear-gradient(90deg, #28a745, #2ecc71)';
+                    // Mostra toast quando completo
+                    setTimeout(() => {
+                        Toast.show('Form completato! Pronto per l\'invio', 'success');
+                    }, 300);
+                }
+            }
+            
+            // Aggiorna progress bar ad ogni input
+            inputs.forEach(input => {
+                input.addEventListener('input', updateProgress);
+                input.addEventListener('change', updateProgress);
+            });
+            
+            // Inizializza
+            updateProgress();
+            
+            // Form validation con animazioni
+            new FormValidator('booking-form');
+            
+            // Reveal animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('in-view');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+        });
+        
+        // Validazione orario di lavoro: 8:00 - 20:00
+        (function() {
             const dataAppuntamentoInput = document.getElementById('dataAppuntamento');
             const form = document.querySelector('form');
             

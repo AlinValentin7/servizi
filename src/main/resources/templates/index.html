@@ -14,8 +14,30 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/cookies.css}">
+    <link rel="stylesheet" th:href="@{/css/loader.css}">
+    <link rel="stylesheet" th:href="@{/css/animations.css}">
+    <link rel="stylesheet" th:href="@{/css/components.css}">
 </head>
 <body>
+    <!-- Page Loader con mattoncini animati -->
+    <div id="page-loader">
+        <div class="loader-content">
+            <div class="brick-loader">
+                <div class="brick"></div>
+                <div class="brick"></div>
+                <div class="brick"></div>
+                <div class="brick"></div>
+                <div class="brick"></div>
+                <div class="brick"></div>
+                <div class="brick"></div>
+                <div class="brick"></div>
+                <div class="brick"></div>
+                <i class="bi bi-tools construction-icon"></i>
+            </div>
+            <div class="loader-text">Stiamo costruendo il tuo futuro</div>
+        </div>
+    </div>
+    
     <header>
         <nav>
             <div class="logo">
@@ -34,10 +56,12 @@
     </header>
 
     <section class="hero">
-        <h1 data-animate>Servizi Edili Elvis SRL</h1>
-        <p data-animate>Professionisti nell'edilizia dal 1995</p>
-        <p data-animate>Ristrutturazioni, costruzioni e manutenzioni di qualità</p>
-        <a href="/prenota" class="btn btn-primary" data-animate>Prenota un Appuntamento</a>
+        <h1 data-animate="zoom" class="reveal-text">Servizi Edili Elvis SRL</h1>
+        <p data-animate="slide-left">Professionisti nell'edilizia dal 1995</p>
+        <p data-animate="slide-right">Ristrutturazioni, costruzioni e manutenzioni di qualità</p>
+        <a href="/prenota" class="btn btn-primary pulse-animation glow-effect btn-modern" data-animate="zoom">
+            <i class="bi bi-calendar-check me-2"></i>Prenota un Appuntamento
+        </a>
     </section>
 
     <!-- Simple showcase carousel -->
@@ -56,74 +80,80 @@
     </div>
 
     <div class="container">
-        <h2 class="section-title" data-animate>I Nostri Servizi</h2>
+        <h2 class="section-title gradient-text" data-animate="fade">I Nostri Servizi</h2>
         
-        <div class="grid">
-            <div class="card" data-animate>
-                <h3 style="color: var(--verde-primario);"><i class="bi bi-house-gear me-2"></i>Ristrutturazioni</h3>
+        <div class="grid stagger-animation">
+            <div class="card card-hover-effect card-3d" data-animate="zoom">
+                <i class="bi bi-house-gear float-animation" style="font-size: 3rem; color: var(--oro-accento); margin-bottom: 1rem;"></i>
+                <h3 style="color: var(--verde-primario);">Ristrutturazioni</h3>
                 <p>Ristrutturiamo case, appartamenti e uffici con materiali di alta qualità e personale specializzato.</p>
             </div>
             
-            <div class="card" data-animate>
-                <h3 style="color: var(--verde-primario);"><i class="bi bi-palette me-2"></i>Imbiancatura</h3>
+            <div class="card card-hover-effect card-3d" data-animate="zoom">
+                <i class="bi bi-palette float-animation" style="font-size: 3rem; color: var(--oro-accento); animation-delay: 0.2s; margin-bottom: 1rem;"></i>
+                <h3 style="color: var(--verde-primario);">Imbiancatura</h3>
                 <p>Servizi di imbiancatura professionale per interni ed esterni con finiture impeccabili.</p>
             </div>
             
-            <div class="card" data-animate>
-                <h3 style="color: var(--verde-primario);"><i class="bi bi-bricks me-2"></i>Muratura</h3>
+            <div class="card card-hover-effect card-3d" data-animate="zoom">
+                <i class="bi bi-bricks float-animation" style="font-size: 3rem; color: var(--oro-accento); animation-delay: 0.4s; margin-bottom: 1rem;"></i>
+                <h3 style="color: var(--verde-primario);">Muratura</h3>
                 <p>Lavori di muratura, costruzione muri divisori e opere in cemento armato.</p>
             </div>
             
-            <div class="card" data-animate>
-                <h3 style="color: var(--verde-primario);"><i class="bi bi-lightning-charge me-2"></i>Impianti</h3>
+            <div class="card card-hover-effect card-3d" data-animate="zoom">
+                <i class="bi bi-lightning-charge float-animation" style="font-size: 3rem; color: var(--oro-accento); animation-delay: 0.6s; margin-bottom: 1rem;"></i>
+                <h3 style="color: var(--verde-primario);">Impianti</h3>
                 <p>Installazione e manutenzione impianti elettrici, idraulici e termici.</p>
             </div>
             
-            <div class="card" data-animate>
-                <h3 style="color: var(--verde-primario);"><i class="bi bi-window me-2"></i>Infissi</h3>
+            <div class="card card-hover-effect card-3d" data-animate="zoom">
+                <i class="bi bi-window float-animation" style="font-size: 3rem; color: var(--oro-accento); animation-delay: 0.8s; margin-bottom: 1rem;"></i>
+                <h3 style="color: var(--verde-primario);">Infissi</h3>
                 <p>Installazione porte, finestre e infissi di ultima generazione.</p>
             </div>
             
-            <div class="card" data-animate>
-                <h3 style="color: var(--verde-primario);"><i class="bi bi-grid-1x2 me-2"></i>Pavimentazione</h3>
+            <div class="card card-hover-effect card-3d" data-animate="zoom">
+                <i class="bi bi-grid-1x2 float-animation" style="font-size: 3rem; color: var(--oro-accento); animation-delay: 1s; margin-bottom: 1rem;"></i>
+                <h3 style="color: var(--verde-primario);">Pavimentazione</h3>
                 <p>Posa di pavimenti in ceramica, parquet, resina e rivestimenti.</p>
             </div>
         </div>
 
         <!-- Stats counters -->
-        <div class="section" data-animate>
-            <h2 class="section-title">I Nostri Numeri</h2>
+        <div class="section" data-animate="slide-left">
+            <h2 class="section-title gradient-text">I Nostri Numeri</h2>
             <p class="section-subtitle">Trasformiamo catapecchie in ville di lusso: qualità, tempi e cura dei dettagli ci distinguono.</p>
             <div class="stats">
-                <div class="stat">
-                    <div class="value" data-counter="250">0</div>
+                <div class="stat bounce-animation">
+                    <div class="value count-up gradient-text" data-counter="250">0</div>
                     <div class="label">Progetti completati</div>
                 </div>
-                <div class="stat">
-                    <div class="value" data-counter="98">0</div>
+                <div class="stat bounce-animation" style="animation-delay: 0.2s;">
+                    <div class="value count-up gradient-text" data-counter="98">0</div>
                     <div class="label">Clienti soddisfatti (%)</div>
                 </div>
-                <div class="stat">
-                    <div class="value" data-counter="30">0</div>
+                <div class="stat bounce-animation" style="animation-delay: 0.4s;">
+                    <div class="value count-up gradient-text" data-counter="30">0</div>
                     <div class="label">Anni di esperienza</div>
                 </div>
-                <div class="stat">
-                    <div class="value" data-counter="12">0</div>
+                <div class="stat bounce-animation" style="animation-delay: 0.6s;">
+                    <div class="value count-up gradient-text" data-counter="12">0</div>
                     <div class="label">Professionisti nel team</div>
                 </div>
             </div>
         </div>
 
-        <div style="text-align: center; margin: 3rem 0;" data-animate>
-            <h2 style="color: var(--verde-primario); margin-bottom: 1rem;">Perché Scegliere Noi?</h2>
-            <div class="card">
-                <ul class="list-unstyled mb-0">
-                    <li class="py-2 border-bottom" style="border-color: var(--beige-scuro) !important;"><i class="bi bi-check2-circle text-success me-2"></i> Oltre 25 anni di esperienza nel settore</li>
-                    <li class="py-2 border-bottom" style="border-color: var(--beige-scuro) !important;"><i class="bi bi-check2-circle text-success me-2"></i> Personale qualificato e certificato</li>
-                    <li class="py-2 border-bottom" style="border-color: var(--beige-scuro) !important;"><i class="bi bi-check2-circle text-success me-2"></i> Materiali di prima qualità</li>
-                    <li class="py-2 border-bottom" style="border-color: var(--beige-scuro) !important;"><i class="bi bi-check2-circle text-success me-2"></i> Preventivi gratuiti e trasparenti</li>
-                    <li class="py-2 border-bottom" style="border-color: var(--beige-scuro) !important;"><i class="bi bi-check2-circle text-success me-2"></i> Assistenza post-vendita</li>
-                    <li class="py-2"><i class="bi bi-check2-circle text-success me-2"></i> Rispetto dei tempi e del budget concordato</li>
+        <div style="text-align: center; margin: 3rem 0;" data-animate="zoom">
+            <h2 class="gradient-text" style="margin-bottom: 1rem;">Perché Scegliere Noi?</h2>
+            <div class="card card-hover-effect" style="background: transparent; box-shadow: none;">
+                <ul class="list-unstyled mb-0 stagger-animation" style="text-align: left;">
+                    <li class="py-3" style="font-size: 1.1rem;"><i class="bi bi-check-circle-fill me-3" style="color: #28a745; font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(40, 167, 69, 0.6));"></i> Oltre 25 anni di esperienza nel settore</li>
+                    <li class="py-3" style="font-size: 1.1rem;"><i class="bi bi-check-circle-fill me-3" style="color: #28a745; font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(40, 167, 69, 0.6));"></i> Personale qualificato e certificato</li>
+                    <li class="py-3" style="font-size: 1.1rem;"><i class="bi bi-check-circle-fill me-3" style="color: #28a745; font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(40, 167, 69, 0.6));"></i> Materiali di prima qualità</li>
+                    <li class="py-3" style="font-size: 1.1rem;"><i class="bi bi-check-circle-fill me-3" style="color: #28a745; font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(40, 167, 69, 0.6));"></i> Preventivi gratuiti e trasparenti</li>
+                    <li class="py-3" style="font-size: 1.1rem;"><i class="bi bi-check-circle-fill me-3" style="color: #28a745; font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(40, 167, 69, 0.6));"></i> Assistenza post-vendita</li>
+                    <li class="py-3" style="font-size: 1.1rem;"><i class="bi bi-check-circle-fill me-3" style="color: #28a745; font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(40, 167, 69, 0.6));"></i> Rispetto dei tempi e del budget concordato</li>
                 </ul>
             </div>
         </div>
@@ -205,6 +235,9 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script th:src="@{/js/react-like.js}"></script>
+    <script th:src="@{/js/universal-animations.js}"></script>
+    <script th:src="@{/js/loader.js}"></script>
     <script th:src="@{/js/navbar.js}"></script>
     <script th:src="@{/js/main.js}"></script>
     <script th:src="@{/js/cookies.js}"></script>

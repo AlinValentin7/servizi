@@ -10,8 +10,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/cookies.css}">
+    <link rel="stylesheet" th:href="@{/css/animations.css}">
+    <link rel="stylesheet" th:href="@{/css/components.css}">
     <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <!-- Progress Bar per completamento form -->
     <style>
+        #form-progress-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 4px;
+            background: #e9ecef;
+        }
+        #form-progress-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
         .form-section {
             background: white;
             padding: 2rem;
@@ -444,11 +461,13 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/react-like.js}"></script>
+    <script th:src="@{/js/universal-animations.js}"></script>
     <script th:src="@{/js/navbar.js}"></script>
     <script th:src="@{/js/main.js}"></script>
     <script th:src="@{/js/cookies.js}"></script>
     <script th:src="@{/js/codice-fiscale.js}"></script>
-    <script>
+    <script th:src="@{/js/paese-citta.js}"></script>
         // Gestione checkbox "Non ha Codice Fiscale"
         document.addEventListener('DOMContentLoaded', function() {
             const nonHaCFCheckbox = document.getElementById('nonHaCodiceFiscaleCheck');

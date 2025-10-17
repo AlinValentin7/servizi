@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Animazioni - Servizi Edili Elvis SRL</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/animations.css}">
+    <link rel="stylesheet" th:href="@{/css/components.css}">
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-5" data-animate="zoom">🎨 Demo Animazioni e Componenti Dinamici</h1>
+
+        <!-- Sezione Toast Notifications -->
+        <section class="mb-5" data-animate="fade">
+            <h2>1. Toast Notifications</h2>
+            <div class="d-flex gap-3 flex-wrap">
+                <button class="btn btn-success" onclick="Toast.show('Operazione completata!', 'success')">
+                    <i class="bi bi-check-circle"></i> Success Toast
+                </button>
+                <button class="btn btn-danger" onclick="Toast.show('Si è verificato un errore!', 'error')">
+                    <i class="bi bi-x-circle"></i> Error Toast
+                </button>
+                <button class="btn btn-warning" onclick="Toast.show('Attenzione!', 'warning')">
+                    <i class="bi bi-exclamation-triangle"></i> Warning Toast
+                </button>
+                <button class="btn btn-info" onclick="Toast.show('Informazione utile', 'info')">
+                    <i class="bi bi-info-circle"></i> Info Toast
+                </button>
+            </div>
+        </section>
+
+        <!-- Sezione Animazioni Cards -->
+        <section class="mb-5">
+            <h2 class="mb-4" data-animate="slide-left">2. Cards con Animazioni</h2>
+            <div class="row g-4">
+                <div class="col-md-4" data-animate="zoom">
+                    <div class="card card-hover-effect">
+                        <div class="card-body text-center">
+                            <i class="bi bi-hammer card-icon float-animation"></i>
+                            <h3>Ristrutturazioni</h3>
+                            <p>Animazione Zoom + Float</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-animate="slide-left">
+                    <div class="card card-hover-effect">
+                        <div class="card-body text-center">
+                            <i class="bi bi-building card-icon"></i>
+                            <h3>Costruzioni</h3>
+                            <p>Animazione Slide Left</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-animate="slide-right">
+                    <div class="card card-hover-effect">
+                        <div class="card-body text-center">
+                            <i class="bi bi-tools card-icon"></i>
+                            <h3>Manutenzioni</h3>
+                            <p>Animazione Slide Right</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione Bottoni Animati -->
+        <section class="mb-5" data-animate="fade">
+            <h2 class="mb-4">3. Bottoni con Effetti</h2>
+            <div class="d-flex gap-3 flex-wrap">
+                <button class="btn btn-primary pulse-animation">
+                    <i class="bi bi-heart-fill"></i> Pulse Effect
+                </button>
+                <button class="btn btn-success ripple-effect">
+                    Ripple Effect
+                </button>
+                <button class="btn btn-warning glow-effect">
+                    Glow Effect
+                </button>
+                <button class="btn btn-info btn-modern">
+                    Modern Effect
+                </button>
+            </div>
+        </section>
+
+        <!-- Sezione Counter Animato -->
+        <section class="mb-5" data-animate="zoom">
+            <h2 class="mb-4">4. Contatori Animati</h2>
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="stat-number gradient-text" data-target="250">0</h1>
+                            <p>Progetti Completati</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="stat-number gradient-text" data-target="1500">0</h1>
+                            <p>Clienti Soddisfatti</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="stat-number gradient-text" data-target="28">0</h1>
+                            <p>Anni di Esperienza</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="stat-number gradient-text" data-target="50">0</h1>
+                            <p>Dipendenti</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione Loading Spinner -->
+        <section class="mb-5" data-animate="slide-left">
+            <h2 class="mb-4">5. Loading Spinners</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div id="loading-small" class="card p-3"></div>
+                </div>
+                <div class="col-md-4">
+                    <div id="loading-medium" class="card p-3"></div>
+                </div>
+                <div class="col-md-4">
+                    <div id="loading-large" class="card p-3"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione Skeleton Loaders -->
+        <section class="mb-5" data-animate="slide-right">
+            <h2 class="mb-4">6. Skeleton Loaders</h2>
+            <div class="card p-4">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text" style="width: 80%;"></div>
+            </div>
+        </section>
+
+        <!-- Sezione Form con Validazione -->
+        <section class="mb-5" data-animate="zoom">
+            <h2 class="mb-4">7. Form con Validazione Animata</h2>
+            <form id="demo-form" class="card p-4">
+                <div class="mb-3">
+                    <label class="form-label">Nome *</label>
+                    <input type="text" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email *</label>
+                    <input type="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Messaggio *</label>
+                    <textarea class="form-control" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary pulse-animation">
+                    <i class="bi bi-send"></i> Invia con Animazione
+                </button>
+            </form>
+        </section>
+
+        <!-- Sezione Progress Bar -->
+        <section class="mb-5" data-animate="fade">
+            <h2 class="mb-4">8. Progress Bar con Scroll</h2>
+            <div class="progress-custom">
+                <div id="scroll-progress" class="progress-bar-custom" style="width: 0%"></div>
+            </div>
+            <p class="mt-2 text-muted">Scrolla la pagina per vedere la barra progredire</p>
+        </section>
+
+        <!-- Sezione State Management -->
+        <section class="mb-5" data-animate="zoom">
+            <h2 class="mb-4">9. State Management Reattivo</h2>
+            <div class="card p-4 text-center">
+                <h3>Contatore: <span id="counter-display" data-reactive="demoCounter">0</span></h3>
+                <div class="d-flex gap-3 justify-content-center mt-3">
+                    <button class="btn btn-success" id="increment-counter">
+                        <i class="bi bi-plus-circle"></i> Incrementa
+                    </button>
+                    <button class="btn btn-danger" id="decrement-counter">
+                        <i class="bi bi-dash-circle"></i> Decrementa
+                    </button>
+                    <button class="btn btn-warning" id="reset-counter">
+                        <i class="bi bi-arrow-clockwise"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Link ai file -->
+        <section class="mb-5" data-animate="fade">
+            <h2 class="mb-4">📚 Documentazione</h2>
+            <div class="alert alert-info">
+                <h4><i class="bi bi-book"></i> Risorse disponibili:</h4>
+                <ul>
+                    <li><strong>GUIDA_ANIMAZIONI_ELEPHANTSQL.md</strong> - Guida completa</li>
+                    <li><strong>examples-usage.js</strong> - 15 esempi di codice</li>
+                    <li><strong>react-like.js</strong> - Sistema componenti dinamici</li>
+                    <li><strong>animations.css</strong> - 30+ animazioni</li>
+                    <li><strong>components.css</strong> - Stili componenti UI</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/react-like.js}"></script>
+    
+    <script>
+        // Inizializzazione componenti
+        document.addEventListener('DOMContentLoaded', () => {
+            // Loading spinners
+            App.mountComponent('LoadingSpinner', 'loading-small', { text: 'Small', size: 'small' });
+            App.mountComponent('LoadingSpinner', 'loading-medium', { text: 'Medium', size: 'medium' });
+            App.mountComponent('LoadingSpinner', 'loading-large', { text: 'Large', size: 'large' });
+            
+            // Counter animati
+            document.querySelectorAll('.stat-number').forEach(counter => {
+                const target = parseInt(counter.dataset.target);
+                AnimationUtils.animateCounter(counter, target, 2000);
+            });
+            
+            // Scroll progress
+            AnimationUtils.onScrollProgress((progress) => {
+                document.getElementById('scroll-progress').style.width = progress + '%';
+            });
+            
+            // Form validation
+            new FormValidator('demo-form');
+            
+            // State management demo
+            App.setState('demoCounter', 0);
+            
+            document.getElementById('increment-counter').addEventListener('click', () => {
+                const current = App.getState('demoCounter');
+                App.setState('demoCounter', current + 1);
+            });
+            
+            document.getElementById('decrement-counter').addEventListener('click', () => {
+                const current = App.getState('demoCounter');
+                App.setState('demoCounter', current - 1);
+            });
+            
+            document.getElementById('reset-counter').addEventListener('click', () => {
+                App.setState('demoCounter', 0);
+            });
+            
+            // Reveal on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('in-view');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
