@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lavora con Noi - Servizi Edili Elvis SRL</title>
+    <meta name="description" content="Entra a far parte del team di Servizi Edili Elvis SRL. Invia la tua candidatura!">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/cookies.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <style>
+        .form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .form-section h3 {
+            color: var(--verde-primario);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--oro-accento);
+        }
+        .required::after {
+            content: " *";
+            color: #e03131;
+        }
+        .file-upload-box {
+            border: 2px dashed var(--verde-secondario);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .file-upload-box:hover {
+            background: #e9ecef;
+            border-color: var(--verde-primario);
+        }
+        .file-upload-box i {
+            font-size: 3rem;
+            color: var(--verde-primario);
+            margin-bottom: 1rem;
+        }
+        .perks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .perk-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .perk-card:hover {
+            transform: translateY(-5px);
+        }
+        .perk-card i {
+            font-size: 2.5rem;
+            color: var(--oro-accento);
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <span class="logo-icon">🏗️</span>
+                <span>Servizi Edili Elvis</span>
+            </div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/lavori">Lavori</a>
+                <a href="/prenota">Prenota</a>
+                <a href="/contatti">Contatti</a>
+                <a href="/lavora-con-noi" style="color: #ffd700;">Lavora con Noi</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="padding: 4rem 2rem;">
+        <h1 style="font-size: 2.8rem;">💼 Lavora con Noi</h1>
+        <p style="font-size: 1.2rem;">Entra a far parte del nostro team di professionisti</p>
+    </section>
+
+    <!-- Perché lavorare con noi -->
+    <div class="container" style="max-width: 1100px; margin-top: 3rem;">
+        <div class="section-title" style="text-align: center; margin-bottom: 1rem;">
+            <h2>Perché Scegliere Servizi Edili Elvis</h2>
+        </div>
+        <p style="text-align: center; color: #6c757d; max-width: 700px; margin: 0 auto 3rem;">
+            Siamo sempre alla ricerca di professionisti qualificati da inserire nel nostro team.
+            Offriamo un ambiente di lavoro stimolante e opportunità di crescita.
+        </p>
+
+        <div class="perks-grid">
+            <div class="perk-card">
+                <i class="bi bi-cash-stack"></i>
+                <h4>Retribuzione Competitiva</h4>
+                <p>Offriamo stipendi in linea con il mercato e premi produzione</p>
+            </div>
+            <div class="perk-card">
+                <i class="bi bi-graph-up-arrow"></i>
+                <h4>Crescita Professionale</h4>
+                <p>Formazione continua e possibilità di avanzamento di carriera</p>
+            </div>
+            <div class="perk-card">
+                <i class="bi bi-people"></i>
+                <h4>Team Affiatato</h4>
+                <p>Lavora con professionisti esperti in un ambiente collaborativo</p>
+            </div>
+            <div class="perk-card">
+                <i class="bi bi-tools"></i>
+                <h4>Attrezzature Moderne</h4>
+                <p>Utilizzo di strumenti e tecnologie all'avanguardia</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Candidatura -->
+    <div class="container" style="max-width: 900px; margin: 4rem auto;">
+        
+        <!-- Messaggi -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            <span th:text="${successMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <span th:text="${errorMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <form th:action="@{/lavora-con-noi}" th:object="${candidatura}" method="post" enctype="multipart/form-data">
+            
+            <!-- Dati Anagrafici -->
+            <div class="form-section">
+                <h3><i class="bi bi-person-badge me-2"></i>Dati Anagrafici</h3>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">Nome</label>
+                        <input type="text" class="form-control" th:field="*{nome}" required maxlength="50">
+                        <div class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">Cognome</label>
+                        <input type="text" class="form-control" th:field="*{cognome}" required maxlength="50">
+                        <div class="text-danger" th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">Data di Nascita</label>
+                        <input type="date" class="form-control" th:field="*{dataNascita}" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}"></div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">Luogo di Nascita</label>
+                        <input type="text" class="form-control" th:field="*{luogoNascita}" required maxlength="100">
+                        <div class="text-danger" th:if="${#fields.hasErrors('luogoNascita')}" th:errors="*{luogoNascita}"></div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">Sesso</label>
+                        <select class="form-select" id="sessoSelect" required>
+                            <option value="">Seleziona...</option>
+                            <option value="M">Maschio</option>
+                            <option value="F">Femmina</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Checkbox Non ha Codice Fiscale -->
+                <div class="mb-3">
+                    <div class="form-check" style="background: #fff3cd; padding: 1rem; border-radius: 8px; border-left: 4px solid #ffc107;">
+                        <input class="form-check-input" type="checkbox" id="nonHaCodiceFiscaleCheck" th:field="*{nonHaCodiceFiscale}">
+                        <label class="form-check-label" for="nonHaCodiceFiscaleCheck" style="font-weight: 600; color: #856404;">
+                            <i class="bi bi-info-circle me-2"></i>Non possiedo il Codice Fiscale Italiano
+                        </label>
+                        <small class="d-block mt-2 text-muted">
+                            Seleziona questa opzione se non sei cittadino italiano o non hai ancora il codice fiscale
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Campo Codice Fiscale -->
+                <div class="mb-3" id="codiceFiscaleContainer">
+                    <label class="form-label required" id="cfLabel">Codice Fiscale</label>
+                    <input type="text" class="form-control" id="codiceFiscaleInput" th:field="*{codiceFiscale}" 
+                           pattern="^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$" 
+                           placeholder="RSSMRA85M01H501Z" style="text-transform: uppercase;" maxlength="16">
+                    <div class="text-danger" th:if="${#fields.hasErrors('codiceFiscale')}" th:errors="*{codiceFiscale}"></div>
+                    <small class="text-muted">Formato: 16 caratteri (lettere maiuscole e numeri)</small>
+                </div>
+            </div>
+
+            <!-- Contatti -->
+            <div class="form-section">
+                <h3><i class="bi bi-envelope me-2"></i>Contatti</h3>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">Email</label>
+                        <input type="email" class="form-control" th:field="*{email}" required maxlength="100">
+                        <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">Telefono</label>
+                        <input type="tel" class="form-control" th:field="*{telefono}" required 
+                               pattern="^[\+]?[0-9]{10,15}$" placeholder="+39 123 456 7890">
+                        <div class="text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indirizzo -->
+            <div class="form-section">
+                <h3><i class="bi bi-geo-alt me-2"></i>Residenza</h3>
+                
+                <div class="mb-3">
+                    <label class="form-label required">Indirizzo</label>
+                    <input type="text" class="form-control" th:field="*{indirizzo}" required maxlength="200" placeholder="Via, Numero civico">
+                    <div class="text-danger" th:if="${#fields.hasErrors('indirizzo')}" th:errors="*{indirizzo}"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5 mb-3">
+                        <label class="form-label required">Città</label>
+                        <input type="text" class="form-control" th:field="*{citta}" required maxlength="100">
+                        <div class="text-danger" th:if="${#fields.hasErrors('citta')}" th:errors="*{citta}"></div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label required">Provincia</label>
+                        <input type="text" class="form-control" th:field="*{provincia}" required maxlength="2" 
+                               placeholder="RM" style="text-transform: uppercase;">
+                        <div class="text-danger" th:if="${#fields.hasErrors('provincia')}" th:errors="*{provincia}"></div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label required">CAP</label>
+                        <input type="text" class="form-control" th:field="*{cap}" required pattern="\d{5}" placeholder="00100" maxlength="5">
+                        <div class="text-danger" th:if="${#fields.hasErrors('cap')}" th:errors="*{cap}"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Posizione e Esperienza -->
+            <div class="form-section">
+                <h3><i class="bi bi-briefcase me-2"></i>Posizione ed Esperienza</h3>
+                
+                <div class="mb-3">
+                    <label class="form-label required">Posizione per cui ti candidi</label>
+                    <select class="form-control" th:field="*{posizioneRichiesta}" required>
+                        <option value="">-- Seleziona --</option>
+                        <option value="Muratore">Muratore</option>
+                        <option value="Carpentiere">Carpentiere</option>
+                        <option value="Elettricista">Elettricista</option>
+                        <option value="Idraulico">Idraulico</option>
+                        <option value="Piastrellista">Piastrellista</option>
+                        <option value="Intonacatore">Intonacatore</option>
+                        <option value="Capocantiere">Capocantiere</option>
+                        <option value="Geometra">Geometra</option>
+                        <option value="Operaio Generico">Operaio Generico</option>
+                        <option value="Altro">Altro</option>
+                    </select>
+                    <div class="text-danger" th:if="${#fields.hasErrors('posizioneRichiesta')}" th:errors="*{posizioneRichiesta}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Livello di Esperienza</label>
+                    <select class="form-control" th:field="*{livelloEsperienza}">
+                        <option value="">-- Seleziona --</option>
+                        <option value="Nessuna esperienza">Nessuna esperienza</option>
+                        <option value="Junior (1-3 anni)">Junior (1-3 anni)</option>
+                        <option value="Intermedio (3-5 anni)">Intermedio (3-5 anni)</option>
+                        <option value="Senior (5+ anni)">Senior (5+ anni)</option>
+                        <option value="Esperto (10+ anni)">Esperto (10+ anni)</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Esperienza Precedente</label>
+                    <textarea class="form-control" th:field="*{esperienzaPrecedente}" rows="4" 
+                              placeholder="Descrivi brevemente la tua esperienza lavorativa nel settore edile..."></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ultimo Lavoro</label>
+                    <input type="text" class="form-control" th:field="*{ultimoLavoro}" 
+                           placeholder="Nome azienda e ruolo" maxlength="100">
+                </div>
+            </div>
+
+            <!-- Qualifiche e Competenze -->
+            <div class="form-section">
+                <h3><i class="bi bi-award me-2"></i>Qualifiche e Competenze</h3>
+                
+                <div class="mb-3">
+                    <label class="form-label">Titolo di Studio</label>
+                    <input type="text" class="form-control" th:field="*{titoloStudio}" 
+                           placeholder="Es: Diploma, Laurea, etc." maxlength="100">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Competenze Tecniche</label>
+                    <textarea class="form-control" th:field="*{competenzeTecniche}" rows="3"
+                              placeholder="Es: muratura, intonacatura, posa piastrelle, utilizzo macchinari specifici..."></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Certificazioni</label>
+                    <textarea class="form-control" th:field="*{certificazioni}" rows="2"
+                              placeholder="Es: Patentino muletto, Lavori in quota, Sicurezza cantieri..."></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Lingue Parlate</label>
+                    <input type="text" class="form-control" th:field="*{lingue}" 
+                           placeholder="Es: Italiano (madrelingua), Inglese (base), Rumeno (fluente)" maxlength="255">
+                </div>
+            </div>
+
+            <!-- Disponibilità -->
+            <div class="form-section">
+                <h3><i class="bi bi-calendar-check me-2"></i>Disponibilità</h3>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label required">Quando sei disponibile a iniziare?</label>
+                        <select class="form-control" th:field="*{disponibilita}" required>
+                            <option value="">-- Seleziona --</option>
+                            <option value="Immediata">Immediata</option>
+                            <option value="Entro 1 mese">Entro 1 mese</option>
+                            <option value="Entro 2 mesi">Entro 2 mesi</option>
+                            <option value="Entro 3 mesi">Entro 3 mesi</option>
+                            <option value="Da concordare">Da concordare</option>
+                        </select>
+                        <div class="text-danger" th:if="${#fields.hasErrors('disponibilita')}" th:errors="*{disponibilita}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Tipo di Contratto Preferito</label>
+                        <select class="form-control" th:field="*{tipoContratto}">
+                            <option value="">-- Seleziona --</option>
+                            <option value="Tempo Indeterminato">Tempo Indeterminato</option>
+                            <option value="Tempo Determinato">Tempo Determinato</option>
+                            <option value="Partita IVA">Partita IVA</option>
+                            <option value="Indifferente">Indifferente</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Lettera Motivazionale (opzionale)</label>
+                    <textarea class="form-control" th:field="*{messaggioMotivazionale}" rows="5"
+                              placeholder="Spiega perché vuoi lavorare con noi e cosa puoi offrire al nostro team..."></textarea>
+                </div>
+            </div>
+
+            <!-- Carica CV -->
+            <div class="form-section">
+                <h3><i class="bi bi-file-earmark-arrow-up me-2"></i>Carica il tuo CV</h3>
+                
+                <div class="file-upload-box" onclick="document.getElementById('cvFile').click()">
+                    <i class="bi bi-cloud-upload"></i>
+                    <h5>Clicca per caricare il CV</h5>
+                    <p class="text-muted mb-0">PDF, DOC, DOCX - Max 5MB</p>
+                    <p class="text-muted"><small>Il CV è consigliato per una valutazione completa</small></p>
+                </div>
+                <input type="file" id="cvFile" name="cvFile" accept=".pdf,.doc,.docx" style="display: none;" 
+                       onchange="document.getElementById('fileName').textContent = this.files[0]?.name || 'Nessun file selezionato'">
+                <p class="mt-2 text-center"><strong id="fileName">Nessun file selezionato</strong></p>
+                <div class="text-danger text-center" th:if="${cvError}" th:text="${cvError}"></div>
+            </div>
+
+            <!-- Privacy -->
+            <div class="form-section">
+                <h3><i class="bi bi-shield-check me-2"></i>Privacy e Consensi</h3>
+                
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" th:field="*{privacyConsent}" required id="privacy">
+                    <label class="form-check-label" for="privacy">
+                        <strong class="required">Accetto l'informativa sulla privacy</strong><br>
+                        <small class="text-muted">Ho letto e accetto l'<a href="/privacy-policy" target="_blank">informativa sulla privacy</a> 
+                        ai sensi del GDPR (Reg. UE 2016/679)</small>
+                    </label>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" th:field="*{dataProcessingConsent}" required id="processing">
+                    <label class="form-check-label" for="processing">
+                        <strong class="required">Autorizzo il trattamento dei dati personali</strong><br>
+                        <small class="text-muted">Autorizzo Servizi Edili Elvis SRL al trattamento dei miei dati personali 
+                        per finalità di selezione del personale</small>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg" style="padding: 1rem 3rem; font-size: 1.1rem;">
+                    <i class="bi bi-send me-2"></i>Invia Candidatura
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <h3>Servizi Edili Elvis SRL</h3>
+                <p><i class="bi bi-geo-alt me-2"></i> Via Roma, 123 - 00100 Roma</p>
+                <p><i class="bi bi-telephone me-2"></i> Tel: +39 3801590128</p>
+                <p><i class="bi bi-envelope me-2"></i> Email: info@serviziedilielvis.it</p>
+            </div>
+            <div class="social-links">
+                <a href="#" title="Facebook"><i class="bi bi-facebook"></i></a>
+                <a href="#" title="Instagram"><i class="bi bi-instagram"></i></a>
+                <a href="#" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+            </div>
+        </div>
+        <p style="margin-top: 1rem;">&copy; 2025 Servizi Edili Elvis SRL - P.IVA 12345678901</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="/privacy-policy" style="color: rgba(255,255,255,0.7); margin: 0 0.5rem;">Privacy Policy</a> |
+            <a href="/cookie-policy" style="color: rgba(255,255,255,0.7); margin: 0 0.5rem;">Cookie Policy</a> |
+            <a onclick="window.openCookieSettings()" class="footer-cookie-link" style="margin: 0 0.5rem;">Gestisci Cookie</a>
+        </p>
+        <span class="firma-discreta">Firmato $₿420</span>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/navbar.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/cookies.js}"></script>
+    <script th:src="@{/js/codice-fiscale.js}"></script>
+    <script>
+        // Gestione checkbox "Non ha Codice Fiscale"
+        document.addEventListener('DOMContentLoaded', function() {
+            const nonHaCFCheckbox = document.getElementById('nonHaCodiceFiscaleCheck');
+            const cfContainer = document.getElementById('codiceFiscaleContainer');
+            const cfInput = document.getElementById('codiceFiscaleInput');
+            const cfLabel = document.getElementById('cfLabel');
+
+            function toggleCodiceFiscale() {
+                if (nonHaCFCheckbox.checked) {
+                    // Nascondi e disabilita il campo CF
+                    cfContainer.style.opacity = '0.5';
+                    cfInput.disabled = true;
+                    cfInput.required = false;
+                    cfInput.value = '';
+                    cfLabel.classList.remove('required');
+                } else {
+                    // Mostra e abilita il campo CF
+                    cfContainer.style.opacity = '1';
+                    cfInput.disabled = false;
+                    cfInput.required = true;
+                    cfLabel.classList.add('required');
+                }
+            }
+
+            // Inizializza lo stato al caricamento della pagina
+            toggleCodiceFiscale();
+
+            // Listener per il cambio stato della checkbox
+            nonHaCFCheckbox.addEventListener('change', toggleCodiceFiscale);
+        });
+
+        // Converti codice fiscale in maiuscolo
+        const cfInput = document.querySelector('input[name="codiceFiscale"]');
+        if (cfInput) {
+            cfInput.addEventListener('input', function(e) {
+                e.target.value = e.target.value.toUpperCase();
+            });
+        }
+        
+        // Converti provincia in maiuscolo
+        const provinciaInput = document.querySelector('input[name="provincia"]');
+        if (provinciaInput) {
+            provinciaInput.addEventListener('input', function(e) {
+                e.target.value = e.target.value.toUpperCase();
+            });
+        }
+    </script>
+</body>
+</html>

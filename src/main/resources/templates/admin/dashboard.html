@@ -37,6 +37,7 @@
             <a href="/admin/lavori"><i class="bi bi-bricks me-1"></i>Gestione Lavori</a>
             <a href="/admin/appuntamenti"><i class="bi bi-calendar-check me-1"></i>Appuntamenti</a>
             <a href="/admin/contatti"><i class="bi bi-envelope-paper me-1"></i>Contatti</a>
+            <a href="/admin/candidature"><i class="bi bi-people me-1"></i>Candidature</a>
             <a href="/"><i class="bi bi-globe2 me-1"></i>Vai al Sito</a>
             <form th:action="@{/admin/logout}" method="post" style="display: inline;">
                 <button type="submit" class="btn btn-sm btn-light ms-2"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
@@ -55,6 +56,17 @@
             <h3><i class="bi bi-envelope-open me-2"></i>Contatti Non Letti</h3>
             <div class="number" th:text="${#lists.size(contatti)}">0</div>
             <a href="/admin/contatti" class="btn btn-primary">Visualizza</a>
+        </div>
+        
+        <div class="dashboard-card">
+            <h3><i class="bi bi-people-fill me-2"></i>Candidature</h3>
+            <div class="number" th:text="${candidatureStats != null ? candidatureStats.totale() : 0}">0</div>
+            <p class="text-muted mb-0">
+                <small>
+                    <span class="badge bg-warning text-dark" th:text="${candidatureStats != null ? candidatureStats.nuove() : 0}">0</span> Nuove
+                </small>
+            </p>
+            <a href="/admin/candidature" class="btn btn-primary">Gestisci</a>
         </div>
         
         <div class="dashboard-card">

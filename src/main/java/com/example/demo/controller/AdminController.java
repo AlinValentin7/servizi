@@ -3,9 +3,11 @@ package com.example.demo.controller;
 import com.example.demo.model.Lavoro;
 import com.example.demo.model.Appuntamento;
 import com.example.demo.model.Contatto;
+import com.example.demo.model.Candidatura;
 import com.example.demo.service.LavoroService;
 import com.example.demo.service.AppuntamentoService;
 import com.example.demo.service.ContattoService;
+import com.example.demo.service.CandidaturaService;
 import com.example.demo.service.StatisticheService;
 import com.example.demo.service.BackupService;
 import com.example.demo.service.ReminderService;
@@ -47,6 +49,9 @@ public class AdminController {
     @Autowired
     private ReminderService reminderService;
     
+    @Autowired
+    private CandidaturaService candidaturaService;
+    
     private static final String UPLOAD_DIR = "src/main/resources/static/uploads/";
 
     @GetMapping("/login")
@@ -63,6 +68,10 @@ public class AdminController {
         model.addAttribute("appuntamenti", appuntamentoService.getAllAppuntamenti());
         model.addAttribute("contatti", contattoService.getContattiNonLetti());
         model.addAttribute("lavori", lavoroService.getAllLavori());
+        
+        // Candidature
+        model.addAttribute("candidature", candidaturaService.trovaTutte());
+        model.addAttribute("candidatureStats", candidaturaService.getStatistiche());
         
         // NUOVO: Statistiche complete per analytics
         model.addAttribute("stats", statisticheService.getStatisticheDashboard());
@@ -261,6 +270,120 @@ public class AdminController {
     public String gestioneContatti(Model model) {
         model.addAttribute("contatti", contattoService.getAllContatti());
         return "admin/contatti";
+    }
+
+    // === GESTIONE CANDIDATURE ===
+    
+    /**
+     * Lista tutte le candidature
+     */
+    @GetMapping("/candidature")
+    public String gestioneCandidature(
+            @RequestParam(value = "stato", required = false) String stato,
+            Model model) {
+        
+        List<Candidatura> candidature;
+        if (stato != null && !stato.isEmpty()) {
+            candidature = candidaturaService.trovaPerStato(stato);
+        } else {
+            candidature = candidaturaService.trovaTutte();
+        }
+        
+        model.addAttribute("candidature", candidature);
+        model.addAttribute("stats", candidaturaService.getStatistiche());
+        model.addAttribute("statoFiltro", stato);
+        
+        return "admin/candidature";
+    }
+    
+    /**
+     * Dettaglio candidatura
+     */
+    @GetMapping("/candidature/{id}")
+    public String dettaglioCandidatura(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            Candidatura candidatura = candidaturaService.trovaPerID(id);
+            model.addAttribute("candidatura", candidatura);
+            return "admin/dettaglio-candidatura";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Candidatura non trovata");
+            return "redirect:/admin/candidature";
+        }
+    }
+    
+    /**
+     * Cambia stato candidatura
+     */
+    @PostMapping("/candidature/{id}/stato")
+    public String aggiornaStatoCandidatura(
+            @PathVariable Long id,
+            @RequestParam("stato") String stato,
+            @RequestParam(value = "note", required = false) String note,
+            RedirectAttributes redirectAttributes) {
+        try {
+            candidaturaService.aggiornaStato(id, stato, note);
+            redirectAttributes.addFlashAttribute("success", "Stato candidatura aggiornato!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Errore nell'aggiornare lo stato: " + e.getMessage());
+        }
+        return "redirect:/admin/candidature/" + id;
+    }
+    
+    /**
+     * Rispondi a una candidatura
+     */
+    @PostMapping("/candidature/{id}/rispondi")
+    public String rispondiCandidatura(
+            @PathVariable Long id,
+            @RequestParam("messaggio") String messaggio,
+            @RequestParam("stato") String stato,
+            RedirectAttributes redirectAttributes) {
+        try {
+            if (messaggio == null || messaggio.trim().isEmpty()) {
+                redirectAttributes.addFlashAttribute("error", "Il messaggio è obbligatorio");
+                return "redirect:/admin/candidature/" + id;
+            }
+            
+            candidaturaService.rispondiCandidatura(id, messaggio, stato);
+            redirectAttributes.addFlashAttribute("success", "✅ Risposta inviata al candidato via email!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Errore nell'invio della risposta: " + e.getMessage());
+        }
+        return "redirect:/admin/candidature/" + id;
+    }
+    
+    /**
+     * Elimina candidatura
+     */
+    @PostMapping("/candidature/{id}/elimina")
+    public String eliminaCandidatura(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            candidaturaService.eliminaCandidatura(id);
+            redirectAttributes.addFlashAttribute("success", "Candidatura eliminata!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Errore nell'eliminare la candidatura: " + e.getMessage());
+        }
+        return "redirect:/admin/candidature";
+    }
+    
+    /**
+     * Download CV
+     */
+    @GetMapping("/candidature/{id}/cv")
+    public String downloadCV(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            Candidatura candidatura = candidaturaService.trovaPerID(id);
+            if (candidatura.getCvFilePath() != null) {
+                // Il download sarà gestito direttamente dall'URL del file
+                return "redirect:/" + candidatura.getCvFilePath();
+            } else {
+                redirectAttributes.addFlashAttribute("error", "CV non disponibile");
+                return "redirect:/admin/candidature/" + id;
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Errore nel download del CV");
+            return "redirect:/admin/candidature";
+        }
     }
 
     // Metodo helper per salvare file
