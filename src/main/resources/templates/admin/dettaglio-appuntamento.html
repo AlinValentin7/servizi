@@ -15,8 +15,7 @@
     <header>
         <nav>
             <div class="logo">
-                <span class="logo-icon"><i class="bi bi-buildings"></i></span>
-                Admin - Servizi Edili Elvis SRL
+                <img th:src="@{/images/logo4.png}" alt="Servizi Edili Elvis SRL" style="height: 50px; width: auto; object-fit: contain; background: transparent;">
             </div>
             <div class="nav-links">
                 <a href="/admin/appuntamenti">Appuntamenti</a>
@@ -46,14 +45,14 @@
                 <div class="row mb-4">
                     <div class="col-md-12">
                         <div class="alert" 
-                             th:classappend="${appuntamento.stato.name() == 'IN_ATTESA'} ? 'alert-warning' :
-                                           (${appuntamento.stato.name() == 'CONFERMATO'} ? 'alert-info' :
-                                           (${appuntamento.stato.name() == 'COMPLETATO'} ? 'alert-success' : 'alert-danger'))">
+                             th:classappend="${appuntamento.stato.name() == 'IN_ATTESA' ? 'alert-warning' :
+                                           (appuntamento.stato.name() == 'CONFERMATO' ? 'alert-info' :
+                                           (appuntamento.stato.name() == 'COMPLETATO' ? 'alert-success' : 'alert-danger'))}">
                             <h4 class="alert-heading">
                                 <i class="bi" 
-                                   th:classappend="${appuntamento.stato.name() == 'IN_ATTESA'} ? 'bi-clock' :
-                                                  (${appuntamento.stato.name() == 'CONFERMATO'} ? 'bi-check-circle' :
-                                                  (${appuntamento.stato.name() == 'COMPLETATO'} ? 'bi-check-all' : 'bi-x-circle'))"></i>
+                                   th:classappend="${appuntamento.stato.name() == 'IN_ATTESA' ? 'bi-clock' :
+                                                  (appuntamento.stato.name() == 'CONFERMATO' ? 'bi-check-circle' :
+                                                  (appuntamento.stato.name() == 'COMPLETATO' ? 'bi-check-all' : 'bi-x-circle'))}"></i>
                                 Stato: <span th:text="${appuntamento.stato}"></span>
                             </h4>
                         </div>

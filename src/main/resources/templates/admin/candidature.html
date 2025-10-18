@@ -45,8 +45,7 @@
     <header style="background: linear-gradient(135deg, #0e3b2e, #145a32);">
         <nav>
             <div class="logo">
-                <span class="logo-icon"><i class="bi bi-shield-lock"></i></span>
-                Admin - Servizi Edili Elvis
+                <img th:src="@{/images/logo4.png}" alt="Servizi Edili Elvis SRL" style="height: 50px; width: auto; object-fit: contain; background: transparent;">
             </div>
             <div class="nav-links">
                 <a href="/admin/dashboard">Dashboard</a>
@@ -205,10 +204,10 @@
                                 </td>
                                 <td>
                                     <span class="badge-stato"
-                                          th:classappend="${cand.stato == 'Nuovo'} ? 'bg-warning text-dark' :
-                                                         ${cand.stato == 'In Valutazione'} ? 'bg-info' :
-                                                         ${cand.stato == 'Contattato'} ? 'bg-primary' :
-                                                         ${cand.stato == 'Accettato'} ? 'bg-success' : 'bg-danger'"
+                                          th:classappend="${cand.stato == 'Nuovo' ? 'bg-warning text-dark' :
+                                                         cand.stato == 'In Valutazione' ? 'bg-info' :
+                                                         cand.stato == 'Contattato' ? 'bg-primary' :
+                                                         cand.stato == 'Accettato' ? 'bg-success' : 'bg-danger'}"
                                           th:text="${cand.stato}"></span>
                                 </td>
                                 <td onclick="event.stopPropagation()">

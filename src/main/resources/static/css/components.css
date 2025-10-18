@@ -308,6 +308,21 @@
     transform: rotateY(10deg) rotateX(10deg);
 }
 
+/* Logo: forzare sfondo trasparente e rimuovere padding/border del contenitore */
+.logo { 
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline-block;
+}
+.logo img {
+    background: transparent !important;
+    display: block !important;
+    max-height: 60px;
+    height: auto;
+    width: auto;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .toast-notification {

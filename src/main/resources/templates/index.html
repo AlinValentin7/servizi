@@ -41,8 +41,7 @@
     <header>
         <nav>
             <div class="logo">
-                <span class="logo-icon"><i class="bi bi-buildings"></i></span>
-                Servizi Edili Elvis SRL
+                <img th:src="@{/images/logo4.png}" alt="Servizi Edili Elvis SRL" style="height: 50px; width: auto; object-fit: contain; background: transparent;">
             </div>
             <div class="nav-links">
                 <a href="/">Home</a>
@@ -144,17 +143,46 @@
             </div>
         </div>
 
-        <div style="text-align: center; margin: 3rem 0;" data-animate="zoom">
-            <h2 class="gradient-text" style="margin-bottom: 1rem;">Perché Scegliere Noi?</h2>
-            <div class="card card-hover-effect" style="background: transparent; box-shadow: none;">
-                <ul class="list-unstyled mb-0 stagger-animation" style="text-align: left;">
-                    <li class="py-3" style="font-size: 1.1rem;"><i class="bi bi-check-circle-fill me-3" style="color: #28a745; font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(40, 167, 69, 0.6));"></i> Oltre 25 anni di esperienza nel settore</li>
-                    <li class="py-3" style="font-size: 1.1rem;"><i class="bi bi-check-circle-fill me-3" style="color: #28a745; font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(40, 167, 69, 0.6));"></i> Personale qualificato e certificato</li>
-                    <li class="py-3" style="font-size: 1.1rem;"><i class="bi bi-check-circle-fill me-3" style="color: #28a745; font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(40, 167, 69, 0.6));"></i> Materiali di prima qualità</li>
-                    <li class="py-3" style="font-size: 1.1rem;"><i class="bi bi-check-circle-fill me-3" style="color: #28a745; font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(40, 167, 69, 0.6));"></i> Preventivi gratuiti e trasparenti</li>
-                    <li class="py-3" style="font-size: 1.1rem;"><i class="bi bi-check-circle-fill me-3" style="color: #28a745; font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(40, 167, 69, 0.6));"></i> Assistenza post-vendita</li>
-                    <li class="py-3" style="font-size: 1.1rem;"><i class="bi bi-check-circle-fill me-3" style="color: #28a745; font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(40, 167, 69, 0.6));"></i> Rispetto dei tempi e del budget concordato</li>
-                </ul>
+        <div style="margin: 4rem 0;" data-animate="fade">
+            <h2 class="section-title gradient-text" style="margin-bottom: 3rem;">Perché Scegliere Noi?</h2>
+            <div class="grid stagger-animation" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                
+                <div class="card card-hover-effect card-3d" data-animate="zoom">
+                    <i class="bi bi-trophy-fill float-animation" style="font-size: 3rem; color: var(--oro-accento); margin-bottom: 1rem;"></i>
+                    <h4 style="color: var(--verde-primario); margin-bottom: 1rem;">Esperienza Consolidata</h4>
+                    <p style="font-size: 1rem; color: #666;">Oltre 25 anni di esperienza nel settore dell'edilizia con centinaia di progetti completati con successo.</p>
+                </div>
+
+                <div class="card card-hover-effect card-3d" data-animate="zoom">
+                    <i class="bi bi-person-check-fill float-animation" style="font-size: 3rem; color: var(--oro-accento); animation-delay: 0.1s; margin-bottom: 1rem;"></i>
+                    <h4 style="color: var(--verde-primario); margin-bottom: 1rem;">Personale Qualificato</h4>
+                    <p style="font-size: 1rem; color: #666;">Team di professionisti certificati e costantemente aggiornati sulle ultime tecnologie e normative.</p>
+                </div>
+
+                <div class="card card-hover-effect card-3d" data-animate="zoom">
+                    <i class="bi bi-gem float-animation" style="font-size: 3rem; color: var(--oro-accento); animation-delay: 0.2s; margin-bottom: 1rem;"></i>
+                    <h4 style="color: var(--verde-primario); margin-bottom: 1rem;">Materiali Premium</h4>
+                    <p style="font-size: 1rem; color: #666;">Utilizziamo solo materiali di prima qualità da fornitori certificati per garantire durabilità e sicurezza.</p>
+                </div>
+
+                <div class="card card-hover-effect card-3d" data-animate="zoom">
+                    <i class="bi bi-calculator-fill float-animation" style="font-size: 3rem; color: var(--oro-accento); animation-delay: 0.3s; margin-bottom: 1rem;"></i>
+                    <h4 style="color: var(--verde-primario); margin-bottom: 1rem;">Preventivi Trasparenti</h4>
+                    <p style="font-size: 1rem; color: #666;">Preventivi gratuiti, dettagliati e chiari senza costi nascosti. Quello che vedi è quello che paghi.</p>
+                </div>
+
+                <div class="card card-hover-effect card-3d" data-animate="zoom">
+                    <i class="bi bi-headset float-animation" style="font-size: 3rem; color: var(--oro-accento); animation-delay: 0.4s; margin-bottom: 1rem;"></i>
+                    <h4 style="color: var(--verde-primario); margin-bottom: 1rem;">Assistenza Continua</h4>
+                    <p style="font-size: 1rem; color: #666;">Supporto dedicato dal primo contatto all'assistenza post-vendita. Siamo sempre al tuo fianco.</p>
+                </div>
+
+                <div class="card card-hover-effect card-3d" data-animate="zoom">
+                    <i class="bi bi-clock-fill float-animation" style="font-size: 3rem; color: var(--oro-accento); animation-delay: 0.5s; margin-bottom: 1rem;"></i>
+                    <h4 style="color: var(--verde-primario); margin-bottom: 1rem;">Puntualità Garantita</h4>
+                    <p style="font-size: 1rem; color: #666;">Rispetto rigoroso dei tempi e del budget concordato. La tua fiducia è la nostra priorità.</p>
+                </div>
+
             </div>
         </div>
 
@@ -213,7 +241,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-info">
-                <h3>Servizi Edili Elvis SRL</h3>
+                <img th:src="@{/images/logo4.png}" alt="Servizi Edili Elvis SRL" style="height: 60px; width: auto; margin-bottom: 1rem; background: transparent;">
                 <p><i class="bi bi-geo-alt me-2"></i> Via Roma, 123 - 00100 Roma</p>
                 <p><i class="bi bi-telephone me-2"></i> Tel: +39 3801590128</p>
                 <p><i class="bi bi-envelope me-2"></i> Email: trandafiralinvalentin@gmail.com</p>

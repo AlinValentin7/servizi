@@ -1,0 +1,33 @@
+[33mcommit 32766f4db343eed239f299f6525e0473a2e48063[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: AlinValentin7 <trandafiralinvalentin@gmail.com>
+Date:   Sat Oct 18 01:07:13 2025 +0200
+
+    Archivia file non necessari: spostati in archive/unused; aggiunto restore script; aggiornato .gitignore
+
+ .gitignore                                         |     5 [32m+[m
+ API_DOCUMENTATION.md                               |   473 [31m-[m
+ PAESE_CITTA_FEATURE.md                             |   135 [31m-[m
+ avvia-mysql.bat                                    |    75 [32m+[m
+ crea-database.bat                                  |    51 [32m+[m
+ data/servizi.mv.db                                 |   Bin [31m40960[m -> [32m0[m bytes
+ data/servizi.trace.db                              | 31825 [31m-------------------[m
+ logs/servizi-edili.log                             |  4313 [31m---[m
+ logs/servizi-edili.log.2025-10-16.0.gz             |   Bin [31m3441[m -> [32m0[m bytes
+ pom.xml                                            |     7 [32m+[m
+ restore-archivio.bat                               |    17 [32m+[m
+ .../demo/controller/StaticPagesController.java     |     9 [32m+[m
+ src/main/resources/application-mysql.properties    |    57 [32m+[m
+ src/main/resources/static/css/animations.css       |   374 [32m+[m
+ src/main/resources/static/css/components.css       |   322 [32m+[m
+ src/main/resources/static/css/loader.css           |   153 [32m+[m
+ src/main/resources/static/js/examples-usage.js     |   221 [32m+[m
+ src/main/resources/static/js/loader.js             |    52 [32m+[m
+ src/main/resources/static/js/react-like.js         |   381 [32m+[m
+ .../resources/static/js/universal-animations.js    |   368 [32m+[m
+ src/main/resources/templates/contatti.html         |    82 [32m+[m[31m-[m
+ src/main/resources/templates/demo-animazioni.html  |   277 [32m+[m
+ src/main/resources/templates/index.html            |   109 [32m+[m[31m-[m
+ src/main/resources/templates/lavora-con-noi.html   |    21 [32m+[m[31m-[m
+ src/main/resources/templates/lavori.html           |    35 [32m+[m[31m-[m
+ src/main/resources/templates/prenota.html          |    86 [32m+[m[31m-[m
+ 26 files changed, 2635 insertions(+), 36813 deletions(-)
