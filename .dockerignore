@@ -1,0 +1,52 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.settings/
+.classpath
+.project
+
+# Logs
+logs/
+*.log
+
+# Database
+data/
+*.db
+*.mv.db
+*.trace.db
+
+# Uploads
+uploads/
+
+# Backups
+backups/
+
+# Environment
+.env
+.env.local
+
+# Documentation
+archive/
+docs/
+README.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
