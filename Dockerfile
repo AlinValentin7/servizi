@@ -26,10 +26,6 @@ RUN apk add --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/Rome /etc/localtime && \
     echo "Europe/Rome" > /etc/timezone
 
-# Crea un utente non-root per sicurezza
-RUN addgroup -S spring && adduser -S spring -G spring
-USER spring:spring
-
 # Imposta la directory di lavoro
 WORKDIR /app
 
@@ -39,16 +35,18 @@ COPY --from=build /app/target/servizi-0.0.1-SNAPSHOT.jar app.jar
 # Crea directory per uploads e logs
 RUN mkdir -p /app/uploads /app/logs /app/data
 
+# Crea un utente non-root per sicurezza
+RUN addgroup -S spring && adduser -S spring -G spring && \
+    chown -R spring:spring /app
+
+USER spring:spring
+
 # Esponi la porta dell'applicazione
 EXPOSE 8080
 
 # Variabili d'ambiente di default (sovrascrivibili)
 ENV SPRING_PROFILES_ACTIVE=prod
 ENV JAVA_OPTS="-Xmx512m -Xms256m"
-
-# Healthcheck per Docker
-HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:8080/actuator/health || exit 1
 
 # Comando per avviare l'applicazione
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

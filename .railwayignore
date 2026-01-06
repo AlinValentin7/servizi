@@ -1,5 +1,4 @@
 # File da ignorare durante il deploy su Railway
-target/
 .git/
 .env
 *.log
