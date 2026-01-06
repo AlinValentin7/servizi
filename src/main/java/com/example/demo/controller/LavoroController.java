@@ -2,16 +2,22 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Lavoro;
 import com.example.demo.service.LavoroService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller per la gestione dei lavori.
+ * AGGIORNATO: Constructor injection.
+ */
 @Controller
 public class LavoroController {
     
-    @Autowired
-    private LavoroService lavoroService;
+    private final LavoroService lavoroService;
+    
+    public LavoroController(LavoroService lavoroService) {
+        this.lavoroService = lavoroService;
+    }
     
     @GetMapping("/lavori")
     public String mostraLavori(Model model) {

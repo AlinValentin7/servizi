@@ -244,11 +244,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     // 10. SUCCESS MESSAGES con Toast
     // ============================================
-    // Converti alert success in Toast
-    const successMessages = document.querySelectorAll('.alert-success');
+    // Converti alert success in Toast (SOLO UNA VOLTA)
+    const successMessages = document.querySelectorAll('.alert-success:not(.toast-shown)');
     successMessages.forEach(alert => {
         const message = alert.textContent.trim();
         if (message && typeof Toast !== 'undefined') {
+            // Marca come già mostrato
+            alert.classList.add('toast-shown');
+            // Mostra il toast dopo un breve delay
             setTimeout(() => {
                 Toast.show(message, 'success', 4000);
             }, 500);

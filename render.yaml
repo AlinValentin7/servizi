@@ -1,0 +1,33 @@
+# render.yaml - Configurazione per Render.com
+
+services:
+  # Web Service
+  - type: web
+    name: servizi-edili
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DATABASE_URL
+        fromDatabase:
+          name: servizi-db
+          property: connectionString
+      - key: MAIL_HOST
+        value: smtp.gmail.com
+      - key: MAIL_PORT
+        value: 587
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: WHATSAPP_NUMBER
+        value: +393801590128
+
+# Database PostgreSQL
+databases:
+  - name: servizi-db
+    plan: free
+    databaseName: servizi_edili
+    user: servizi_user

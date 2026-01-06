@@ -148,10 +148,10 @@ public class EmailService {
             "Il nostro team sarà puntuale all'orario concordato.\n" +
             "Ti ricordiamo che la durata prevista dell'appuntamento è di circa 1 ora.\n\n" +
             "Per qualsiasi necessità, non esitare a contattarci:\n" +
-            "📞 Telefono: +39 3801590128\n" +
-            "📧 Email: trandafiralinvalentin@gmail.com\n\n" +
+            "📞 Telefono: +39 320 709 7442\n" +
+            "📧 Email: ristrutturazioniedili.elvis@gmail.com\n\n" +
             "Cordiali saluti,\n" +
-            "Il Team di Servizi Edili Elvis SRL\n" +
+            "Il Team di RISTRUTTURAZIONI EDILI ELVIS SRLS\n" +
             "www.serviziedilielvis.it"
         );
         
@@ -169,7 +169,7 @@ public class EmailService {
     public void inviaNotificaAdminNuovoAppuntamento(Appuntamento appuntamento) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromEmail);
-        message.setTo("trandafiralinvalentin@gmail.com"); // Email admin
+        message.setTo("ristrutturazioniedili.elvis@gmail.com"); // Email admin
         message.setSubject("🔔 NUOVO APPUNTAMENTO RICEVUTO - Azione Richiesta");
         
         String dataOraFormattata = appuntamento.getDataAppuntamento().format(DATE_FORMATTER);
@@ -209,7 +209,7 @@ public class EmailService {
     public void inviaNotificaAdminNuovoContatto(Contatto contatto) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromEmail);
-        message.setTo("trandafiralinvalentin@gmail.com"); // Email admin
+        message.setTo("ristrutturazioniedili.elvis@gmail.com"); // Email admin
         message.setSubject("💬 NUOVO MESSAGGIO CONTATTO - " + contatto.getNome());
         
         message.setText(
@@ -275,12 +275,12 @@ public class EmailService {
             "Ti invitiamo a scegliere una nuova data e ora tramite il nostro sito:\n" +
             "🌐 www.serviziedilielvis.it/prenota\n\n" +
             "Oppure contattaci direttamente per concordare un nuovo appuntamento:\n" +
-            "📞 Telefono: +39 3801590128\n" +
-            "📧 Email: trandafiralinvalentin@gmail.com\n" +
-            "💬 WhatsApp: +39 3801590128\n\n" +
+            "📞 Telefono: +39 320 709 7442\n" +
+            "📧 Email: ristrutturazioniedili.elvis@gmail.com\n" +
+            "💬 WhatsApp: +39 320 709 7442\n\n" +
             "Ci scusiamo per l'inconveniente e restiamo a tua disposizione.\n\n" +
             "Cordiali saluti,\n" +
-            "Il Team di Servizi Edili Elvis SRL"
+            "Il Team di RISTRUTTURAZIONI EDILI ELVIS SRLS"
         );
         
         mailSender.send(message);

@@ -6,7 +6,7 @@
     <title>I Nostri Lavori - Servizi Edili Elvis SRL</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -60,13 +60,13 @@
         </div>
 
         <div th:if="${lavori.isEmpty()}" style="text-align: center; padding: 3rem;">
-            <p style="font-size: 1.2rem; color: var(--verde-primario);">Nessun lavoro disponibile al momento.</p>
+            <p style="font-size: 1.2rem; color: #1F3C88; font-weight: 600;">Nessun lavoro disponibile al momento.</p>
         </div>
 
-        <div class="gradient-animation" data-animate="zoom" style="background: linear-gradient(135deg, var(--verde-primario), var(--verde-secondario)); color: white; padding: 3rem; border-radius: 10px; text-align: center; margin: 3rem 0;">
+        <div class="gradient-animation" data-animate="zoom" style="background: linear-gradient(135deg, #1F3C88, #162a5c); color: white; padding: 3rem; border-radius: 10px; text-align: center; margin: 3rem 0;">
             <h2 class="reveal-text">Vuoi un lavoro come questi?</h2>
             <p style="font-size: 1.2rem; margin: 1rem 0;">Prenota un appuntamento gratuito per un preventivo personalizzato!</p>
-            <a href="/prenota" class="btn pulse-animation glow-effect btn-modern" style="background-color: white; color: var(--verde-primario);">
+            <a href="/prenota" class="btn pulse-animation glow-effect btn-modern" style="background-color: #F39C12; color: #FFFFFF; font-weight: 700;">
                 <i class="bi bi-calendar-check me-2"></i>Prenota Ora
             </a>
         </div>
@@ -75,13 +75,13 @@
     <footer>
         <div class="footer-content">
             <div class="footer-info">
-                <img th:src="@{/images/logo4.png}" alt="Servizi Edili Elvis SRL" style="height: 60px; width: auto; margin-bottom: 1rem; background: transparent;">
-                <p><i class="bi bi-geo-alt me-2"></i> Via Roma, 123 - 00100 Roma</p>
-                <p><i class="bi bi-telephone me-2"></i> Tel: +39 3801590128</p>
-                <p><i class="bi bi-envelope me-2"></i> Email: trandafiralinvalentin@gmail.com</p>
+                <img th:src="@{/images/logo4.png}" alt="RISTRUTTURAZIONI EDILI ELVIS SRLS" style="height: 60px; width: auto; margin-bottom: 1rem; background: transparent;">
+                <p><i class="bi bi-geo-alt me-2"></i> Via Giuseppe Palumbo, 12 - 00195 Roma (RM)</p>
+                <p><i class="bi bi-telephone me-2"></i> Tel: +39 320 709 7442</p>
+                <p><i class="bi bi-envelope me-2"></i> Email: ristrutturazioniedili.elvis@gmail.com</p>
             </div>
         </div>
-        <p style="margin-top: 1rem;">&copy; 2025 Servizi Edili Elvis SRL - P.IVA 12345678901</p>
+        <p style="margin-top: 1rem;">&copy; 2025 RISTRUTTURAZIONI EDILI ELVIS SRLS - P.IVA IT17443671007</p>
         <p style="margin-top: 0.5rem;">
             <a href="/privacy-policy" style="color: rgba(255,255,255,0.7); margin: 0 0.5rem;">Privacy Policy</a> |
             <a href="/cookie-policy" style="color: rgba(255,255,255,0.7); margin: 0 0.5rem;">Cookie Policy</a> |

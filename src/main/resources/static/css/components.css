@@ -4,17 +4,22 @@
 
 /* Card con effetti hover avanzati */
 .card {
-    border: none;
+    border: 2px solid #E5E5E5;
     border-radius: 12px;
     overflow: hidden;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background: #FFFFFF;
+    box-shadow: 0 8px 24px rgba(31, 60, 136, 0.12);
     transition: all 0.3s ease;
+}
+
+.card:hover {
+    border-color: #1F3C88;
+    box-shadow: 0 12px 32px rgba(31, 60, 136, 0.20);
 }
 
 .card-icon {
     font-size: 3rem;
-    color: #c5a059;
+    color: #F39C12;
     margin-bottom: 1rem;
     display: inline-block;
 }
@@ -207,7 +212,7 @@
 
 .progress-bar-custom {
     height: 100%;
-    background: linear-gradient(90deg, #c5a059, #d4af6a);
+    background: linear-gradient(90deg, #F39C12, #f5a82e);
     transition: width 0.6s ease;
     border-radius: 10px;
 }
@@ -237,12 +242,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #c5a059;
+    background: #F39C12;
     border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #a68a4d;
+    background: #d88910;
 }
 
 /* Glassmorphism Effect */
@@ -291,11 +296,12 @@
 
 /* Gradient Text */
 .gradient-text {
-    background: linear-gradient(135deg, #c5a059, #0e3b2e);
+    background: linear-gradient(135deg, #F39C12, #1F3C88);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* 3D Card Effect */

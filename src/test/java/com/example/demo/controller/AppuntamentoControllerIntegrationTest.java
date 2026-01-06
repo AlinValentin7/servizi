@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,6 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * 
  * Testa l'integrazione completa tra Controller, Service e View usando MockMvc.
  * Simula richieste HTTP reali senza avviare un server.
+ * 
+ * AGGIORNATO: Usa @MockitoBean invece di @MockBean (deprecato in Spring Boot 3.4+)
  */
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -34,7 +36,7 @@ class AppuntamentoControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private AppuntamentoService appuntamentoService;
 
     @Test
@@ -47,12 +49,18 @@ class AppuntamentoControllerIntegrationTest {
 
     @Test
     void testCreaAppuntamento_Success() throws Exception {
-        // Arrange
+        // Arrange - Use a valid time within business hours (8:00-20:00)
+        LocalDateTime validDateTime = LocalDateTime.now().plusDays(1).withHour(10).withMinute(0).withSecond(0).withNano(0);
+        
         Appuntamento appuntamento = new Appuntamento();
         appuntamento.setId(1L);
         appuntamento.setNomeCliente("Mario");
         appuntamento.setCognomeCliente("Rossi");
         appuntamento.setEmail("mario.rossi@example.com");
+        appuntamento.setTelefono("3331234567");
+        appuntamento.setDataAppuntamento(validDateTime);
+        appuntamento.setTipoServizio("Ristrutturazione");
+        appuntamento.setIndirizzo("Via Roma 123, Roma");
 
         when(appuntamentoService.creaAppuntamento(any(Appuntamento.class))).thenReturn(appuntamento);
 
@@ -64,10 +72,13 @@ class AppuntamentoControllerIntegrationTest {
                 .param("cognomeCliente", "Rossi")
                 .param("email", "mario.rossi@example.com")
                 .param("telefono", "3331234567")
-                .param("dataOra", LocalDateTime.now().plusDays(1).toString())
-                .param("servizioRichiesto", "Ristrutturazione"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/conferma-appuntamento"));
+                .param("dataAppuntamento", validDateTime.toString())
+                .param("tipoServizio", "Ristrutturazione")
+                .param("indirizzo", "Via Roma 123, Roma"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("conferma-appuntamento"))
+                .andExpect(model().attributeExists("whatsappLink"))
+                .andExpect(model().attribute("success", true));
     }
 
     @Test

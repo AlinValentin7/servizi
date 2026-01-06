@@ -4,24 +4,33 @@ import com.example.demo.model.Appuntamento;
 import com.example.demo.service.AppuntamentoService;
 import com.example.demo.service.WhatsAppService;
 import com.example.demo.validator.AppuntamentoValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
+/**
+ * Controller per la gestione degli appuntamenti.
+ * 
+ * AGGIORNATO: Usa constructor injection invece di field injection (@Autowired)
+ * per migliore testabilità e immutabilità.
+ */
 @Controller
 public class AppuntamentoController {
     
-    @Autowired
-    private AppuntamentoService appuntamentoService;
+    private final AppuntamentoService appuntamentoService;
+    private final WhatsAppService whatsAppService;
+    private final AppuntamentoValidator appuntamentoValidator;
     
-    @Autowired
-    private WhatsAppService whatsAppService;
-    
-    @Autowired
-    private AppuntamentoValidator appuntamentoValidator;
+    // Constructor injection - best practice Spring moderna
+    public AppuntamentoController(AppuntamentoService appuntamentoService,
+                                  WhatsAppService whatsAppService,
+                                  AppuntamentoValidator appuntamentoValidator) {
+        this.appuntamentoService = appuntamentoService;
+        this.whatsAppService = whatsAppService;
+        this.appuntamentoValidator = appuntamentoValidator;
+    }
     
     @GetMapping("/")
     public String home(Model model) {

@@ -2,18 +2,24 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Contatto;
 import com.example.demo.service.ContattoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
+/**
+ * Controller per la gestione dei contatti.
+ * AGGIORNATO: Constructor injection per migliore design.
+ */
 @Controller
 public class ContattoController {
     
-    @Autowired
-    private ContattoService contattoService;
+    private final ContattoService contattoService;
+    
+    public ContattoController(ContattoService contattoService) {
+        this.contattoService = contattoService;
+    }
     
     @GetMapping("/contatti")
     public String mostraFormContatti(Model model) {

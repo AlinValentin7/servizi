@@ -214,9 +214,9 @@ public class CandidaturaService {
                 "- Telefono: %s\n\n" +
                 "Grazie per il tuo interesse!\n\n" +
                 "Cordiali saluti,\n" +
-                "Servizi Edili Elvis SRL\n" +
-                "Tel: +39 380 159 0128\n" +
-                "Email: info@serviziedilielvis.it",
+                "RISTRUTTURAZIONI EDILI ELVIS SRLS\n" +
+                "Tel: +39 320 709 7442\n" +
+                "Email: ristrutturazioniedili.elvis@gmail.com",
                 candidatura.getNome(),
                 candidatura.getCognome(),
                 candidatura.getPosizioneRichiesta(),
@@ -282,9 +282,9 @@ public class CandidaturaService {
                 "Stato candidatura: %s\n\n" +
                 "Per qualsiasi informazione non esitare a contattarci.\n\n" +
                 "Cordiali saluti,\n" +
-                "Servizi Edili Elvis SRL\n" +
-                "Tel: +39 380 159 0128\n" +
-                "Email: info@serviziedilielvis.it",
+                "RISTRUTTURAZIONI EDILI ELVIS SRLS\n" +
+                "Tel: +39 320 709 7442\n" +
+                "Email: ristrutturazioniedili.elvis@gmail.com",
                 candidatura.getNome(),
                 candidatura.getCognome(),
                 candidatura.getPosizioneRichiesta(),

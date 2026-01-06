@@ -101,7 +101,7 @@ public class ReminderService {
      */
     private void inviaReminderAppuntamento(Appuntamento appuntamento) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("trandafiralinvalentin@gmail.com");
+        message.setFrom("ristrutturazioniedili.elvis@gmail.com");
         message.setTo(appuntamento.getEmail());
         message.setSubject("⏰ PROMEMORIA APPUNTAMENTO DOMANI - Servizi Edili Elvis SRL");
         
@@ -121,8 +121,8 @@ public class ReminderService {
             "Il nostro team sarà puntuale all'appuntamento.\n\n" +
             "❌ DEVI DISDIRE?\n" +
             "Se non puoi più presentarti, ti preghiamo di avvisarci il prima possibile:\n" +
-            "📞 Telefono: +39 3801590128\n" +
-            "📧 Email: trandafiralinvalentin@gmail.com\n" +
+            "📞 Telefono: +39 320 709 7442\n" +
+            "📧 Email: ristrutturazioniedili.elvis@gmail.com\n" +
             "💬 WhatsApp: +39 3801590128\n\n" +
             "⚠️ IMPORTANTE:\n" +
             "- Durata prevista: circa 1 ora\n" +
@@ -132,7 +132,7 @@ public class ReminderService {
             "Cordiali saluti,\n" +
             "Il Team di Servizi Edili Elvis SRL\n" +
             "📞 +39 3801590128\n" +
-            "📧 trandafiralinvalentin@gmail.com"
+            "📧 ristrutturazioniedili.elvis@gmail.com"
         );
         
         mailSender.send(message);
