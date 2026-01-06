@@ -45,8 +45,8 @@ USER spring:spring
 EXPOSE 8080
 
 # Variabili d'ambiente di default (sovrascrivibili)
-ENV SPRING_PROFILES_ACTIVE=prod
+ENV SPRING_PROFILES_ACTIVE=railway
 ENV JAVA_OPTS="-Xmx512m -Xms256m"
 
 # Comando per avviare l'applicazione
-CMD ["sh", "-c", "java $JAVA_OPTS -Dserver.port=${PORT:-8080} -jar app.jar --spring.profiles.active=prod"]
+CMD ["sh", "-c", "java $JAVA_OPTS -Dserver.port=${PORT:-8080} -jar app.jar --spring.profiles.active=${SPRING_PROFILES_ACTIVE:-railway}"]
