@@ -1,0 +1,13 @@
+# Railway.app configuration
+version: 2
+
+services:
+  web:
+    build:
+      dockerfile: Dockerfile
+    healthcheck:
+      path: /
+      interval: 30
+      timeout: 10
+    env:
+      SPRING_PROFILES_ACTIVE: railway
